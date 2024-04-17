@@ -4,6 +4,9 @@ using Portal.BLL.DTO;
 using Portal.BLL.Infrastructure;
 using Portal.BLL.Interfaces;
 using MusicPortal.Models;
+using NuGet.Protocol.Core.Types;
+using System.Text;
+using System.Security.Cryptography;
 
 
 namespace MusicPortal.Controllers
@@ -51,11 +54,13 @@ namespace MusicPortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,LoginMail,Password,PasswordConfirm")] ViewUserRegister user)
+        public async Task<IActionResult> Create([Bind("Name,LoginMail,Password,PasswordConfirm")] RegisterModel user)
         {
-            if (!await _context.GetUserLog(user.LoginMail))
+            UserDTO udto = await _context.GetUserByLog(user.LoginMail);
+            if (udto != null)
             {
-               ModelState.AddModelError("", "Такой логин занят!");        
+               ModelState.AddModelError("", "Такой логин занят!");
+                return View(user);
             }
            
             if (ModelState.IsValid)
@@ -67,6 +72,8 @@ namespace MusicPortal.Controllers
                     Password = user.Password,
                 };   
                 await _context.CreateUser(us);
+                HttpContext.Session.SetString("Name", user.Name);
+                HttpContext.Session.SetString("Login", user.LoginMail);
                 return RedirectToAction("Index", "Home");
             }
             return View(user);
@@ -144,6 +151,51 @@ namespace MusicPortal.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        //авторизация пользователя
+        public IActionResult Logon()
+        {
+            if (HttpContext.Session.GetString("Name")!= null)
+            {
+                HttpContext.Session.Clear();
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logon(LoginModel logon)
+        {
+            if (ModelState.IsValid)
+            {
+                if(await _context.GetUserByLog(logon.LoginMail) == null)
+                {
+                    ModelState.AddModelError("", "Ошибка в логине или пароле!");
+                    return View(logon);
+                }
+                UserDTO udto = await _context.GetUserByLog(logon.LoginMail);
+                string? salt = udto.Salt;
+
+                //переводим пароль в байт-массив  
+                byte[] password = Encoding.Unicode.GetBytes(salt + logon.Password);
+
+                //вычисляем хеш-представление в байтах  
+                byte[] byteHash = SHA256.HashData(password);
+
+                StringBuilder hash = new StringBuilder(byteHash.Length);
+                for (int i = 0; i < byteHash.Length; i++)
+                    hash.Append(string.Format("{0:X2}", byteHash[i]));
+
+                if (udto.Password != hash.ToString())
+                {
+                    ModelState.AddModelError("", "Ошибка в логине или пароле!");
+                    return View(logon);
+                }
+                HttpContext.Session.SetString("Name", udto.Name);
+                HttpContext.Session.SetString("Login", udto.LoginMail);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(logon);
         }
     }
 }

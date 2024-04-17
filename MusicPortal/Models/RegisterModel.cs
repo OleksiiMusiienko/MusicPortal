@@ -2,7 +2,7 @@
 
 namespace MusicPortal.Models
 {
-    public class ViewUserRegister
+    public class RegisterModel
     {
         [Required(ErrorMessage = "Поле должно быть установлено")]
         [Display(Name = "Имя")]        

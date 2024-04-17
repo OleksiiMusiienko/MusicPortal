@@ -23,22 +23,9 @@ namespace Portal.DAL.Repositories
         }
         public async Task<User> GetUserName(string name)
         {
-            var users = await db.Users.Where(a => a.Name == name).ToListAsync();
+            var users = await db.Users.Where(a => a.LoginMail == name).ToListAsync();
             User? user = users?.FirstOrDefault();
             return user;
-        }
-        public async Task<bool> GetUserLog(string log) // проверка совпадения логина
-        {
-            var list = await db.Users.Where(a => a.LoginMail == log).ToListAsync();
-            User? user = list?.FirstOrDefault();
-            if (user != null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
         }
         public async Task Create(User us)
         {

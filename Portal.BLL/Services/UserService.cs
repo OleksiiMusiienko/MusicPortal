@@ -1,12 +1,13 @@
-﻿using Portal.BLL.DTO;
-using Portal.BLL.Interfaces;
+﻿using AutoMapper;
+using Portal.BLL.DTO;
 using Portal.BLL.Infrastructure;
-using Portal.DAL.Interfaces;
+using Portal.BLL.Interfaces;
 using Portal.DAL.Entities;
-using AutoMapper;
+using Portal.DAL.Interfaces;
+using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 
 namespace Portal.BLL.Services
 {
@@ -32,10 +33,6 @@ namespace Portal.BLL.Services
             EncodingPassword(userDTO, user);
             await Database.Users.Create(user);
             await Database.Save();
-        }
-        public async Task<bool> GetUserLog(string log)  // проверка совпадения логина
-        {
-            return await Database.Users.GetUserLog(log);
         } 
         public async Task UpdateUser(UserDTO userDTO)
         {
@@ -77,6 +74,30 @@ namespace Portal.BLL.Services
                 Salt = user.Salt,
                 DateReg = user.DateReg
             };
+        }
+        public async Task<UserDTO> GetUserByLog(string log)
+        {
+            User user = await Database.Users.GetUserName(log);
+            if (user != null)
+            {
+                UserDTO udto = new UserDTO
+                {
+                    Name = user.Name,
+                    LoginMail = user.LoginMail,
+                    StatusAdmin = user.StatusAdmin,
+                    Password = user.Password,
+                    Salt = user.Salt,
+                    DateReg = user.DateReg
+                };
+                return udto;
+            }
+            else
+            {
+                UserDTO udto = null;
+                return udto;
+            }
+            
+
         }
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
