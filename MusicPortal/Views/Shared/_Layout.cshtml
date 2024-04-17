@@ -15,26 +15,31 @@
         <nav>
            <ul>
                <li class="nav-item">
-                        <a class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                        <a id="link-1" class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                 </li>
                     <li class="nav-item">
-                        <a class="navbar-brand mylink" asp-area="" asp-controller="Users" asp-action="Create">Регистрация</a>
+                        <a id="link-2" class="navbar-brand mylink" asp-area="" asp-controller="Users" asp-action="Create">Регистрация</a>
                     </li>
                     <li>
                         @if (@Context.Session.GetString("Name") == null)
                             {
-                                <a class="navbar-brand mylink" asp-area="" asp-controller="Users" asp-action="Logon">Войти</a>
+                                <a id="link-3" class="navbar-brand mylink" asp-area="" asp-controller="Users" asp-action="Logon">Войти</a>
                             }
                             else
                             {
-                                <a class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Logout">Выйти</a>
-                            <span class="navbar-brand" style="text-align:center; color:whitesmoke; font-weight: bold;"> - Здравствуйте, @Context.Session.GetString("Name") ((@Context.Session.GetString("Login"))</span>
+                                 <a id="link-3" class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Logout">Выйти</a>
+                            
                             }
                     </li>
            </ul>
 	    </nav>
        </div>	    
-     <div class="col-2"></div>
+     <div class="col-2">
+            @if (@Context.Session.GetString("Name") != null)
+            {
+                <p class="navbar-brand username" style="text-align: right; color:whitesmoke; font-weight: bold;"> Здравствуйте, @Context.Session.GetString("Name") (@Context.Session.GetString("Login"))</p>
+            }
+     </div>
 	
     </header>
     <div class="index-bg">
