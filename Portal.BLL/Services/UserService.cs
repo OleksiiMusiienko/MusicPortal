@@ -27,7 +27,7 @@ namespace Portal.BLL.Services
                 Password = userDTO.Password,
                 Salt = "",
                 Register = true,
-                DateReg = DateTime.Now.ToString("hh:mm:ss"),
+                DateReg = DateTime.Now.ToString()
             };
             EncodingPassword(userDTO, user);
             await Database.Users.Create(user);
