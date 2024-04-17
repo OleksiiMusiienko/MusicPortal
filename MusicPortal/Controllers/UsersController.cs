@@ -51,7 +51,7 @@ namespace MusicPortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,LoginMail,Password,")] ViewUserRegister user)
+        public async Task<IActionResult> Create([Bind("Name,LoginMail,Password,PasswordConfirm")] ViewUserRegister user)
         {
             var us = new UserDTO
             {

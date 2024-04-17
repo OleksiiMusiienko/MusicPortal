@@ -7,17 +7,18 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>         
             <div class="form-group">
+                <label asp-for="LoginMail" class="control-label">Имя</label>
                 <input asp-for="Name" class="form-control" placeholder="Имя" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LoginMail" class="control-label">Логин</label>
-                <input asp-for="LoginMail" class="form-control" placeholder="Ваш E-mail" />
+                <input asp-for="LoginMail" class="form-control" placeholder="Введите ваш E-mail в качестве логина" />
                 <span asp-validation-for="LoginMail" class="text-danger"></span>
             </div>         
             <div class="form-group">
                 <label asp-for="Password" class="control-label">Пароль</label>
-                <input asp-for="Password" class="form-control" placeholder="Не менее 6 символов, большие, маленькие буквы, символы" />
+                <input asp-for="Password" class="form-control" placeholder="Не менее 6 знаков, большие, маленькие буквы, символы" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
