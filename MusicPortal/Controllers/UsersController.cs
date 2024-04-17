@@ -53,14 +53,19 @@ namespace MusicPortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,LoginMail,Password,PasswordConfirm")] ViewUserRegister user)
         {
-            var us = new UserDTO
+            if (!await _context.GetUserLog(user.LoginMail))
             {
-                Name = user.Name,
-                LoginMail = user.LoginMail,
-                Password = user.Password,
-            };
+               ModelState.AddModelError("", "Такой логин занят!");        
+            }
+           
             if (ModelState.IsValid)
             {
+                var us = new UserDTO
+                {
+                    Name = user.Name,
+                    LoginMail = user.LoginMail,
+                    Password = user.Password,
+                };   
                 await _context.CreateUser(us);
                 return RedirectToAction("Index", "Home");
             }

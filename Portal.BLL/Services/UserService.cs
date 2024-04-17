@@ -33,6 +33,10 @@ namespace Portal.BLL.Services
             await Database.Users.Create(user);
             await Database.Save();
         }
+        public async Task<bool> GetUserLog(string log)  // проверка совпадения логина
+        {
+            return await Database.Users.GetUserLog(log);
+        } 
         public async Task UpdateUser(UserDTO userDTO)
         {
             var user = new User
