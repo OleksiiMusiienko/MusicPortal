@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MusicPortal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MusicPortal.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="header-container">
+      <div class="col-1">
+        <nav>
+           <ul>
+               <li class="nav-item">
+                        <a class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                </li>
+                    <li class="nav-item">
+                        <a class="navbar-brand mylink" asp-area="" asp-controller="Users" asp-action="Create">Регистрация</a>
+                    </li>
+                    <li>
+                            @if (ViewBag.Name == null)
+                            {
+                                <a class="navbar-brand mylink" asp-area="" asp-controller="Account" asp-action="Login">Войти</a>
+                            }
+                            else
+                            {
+                                <a class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Logout">Выйти</a>
+                                <span class="navbar-brand" style="text-align:center; color:whitesmoke; font-weight: bold;"> - Здравствуйте, @Context.Session.GetString("Name")</span>
+                            }
+                    </li>
+           </ul>
+	    </nav>
+       </div>	    
+     <div class="col-2"></div>
+	
+    </header>
+    <div class="index-bg">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+       <div class="container">
+            &copy; 2024 - MusicPortal all rights reserved!
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

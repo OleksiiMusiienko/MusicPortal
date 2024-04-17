@@ -1,0 +1,80 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #353535;
+}
+header nav {
+    width: 1300px;
+    height: 300px;
+    position: relative;
+    background: url(/images/header-bg.jpg) no-repeat;
+    text-align: center;
+}
+.header-container {
+    display: flex;
+    width: 100%;
+    height: 309px;
+    height:300px;
+}
+
+.col-1 {
+    flex: 1 1 auto;
+    height: 309px;
+}
+
+.col-2 {
+    flex: 20 1 auto;
+    background: url(/images/header-bg-right.jpg) repeat-x;
+}
+
+footer {
+    text-align: center;
+    height: 60px;
+    overflow: hidden;
+    background: url(/images/footer-bg.png) repeat-x;
+    position: relative;
+    z-index: 1
+}
+
+footer span {
+  font: 12px/20px Arial, Helvetica, sans-serif;
+  color: #fff;
+  padding-top: 37px;
+  display: block
+}
+
+footer span a {
+   color: #176300
+  }
+
+.index-bg {
+    background-color: #353535;
+}
+ul {
+    list-style: none;
+    margin-left: 200px;
+        
+}
+header nav li {
+    display: inline;
+}
+.mylink{
+    font-size: 24pt;
+}
