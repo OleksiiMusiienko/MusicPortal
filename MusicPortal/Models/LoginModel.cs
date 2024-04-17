@@ -4,10 +4,10 @@ namespace MusicPortal.Models
 {
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Поле должно быть установлено")]
         [Display(Name = "Логин")]
         public string? LoginMail { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Поле должно быть установлено")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string? Password { get; set; }
