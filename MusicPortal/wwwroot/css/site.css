@@ -15,10 +15,12 @@ html {
   position: relative;
   min-height: 100%;
 }
-
 body {
     margin-bottom: 60px;
     background-color: #353535;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 header nav {
     width: 1300px;
@@ -40,7 +42,7 @@ header nav {
 }
 
 .col-2 {
-    flex: 20 1 auto;
+    flex: 11 1 auto;
     background: url(/images/header-bg-right.jpg) repeat-x;
 }
 
@@ -50,7 +52,7 @@ footer {
     overflow: hidden;
     background: url(/images/footer-bg.png) repeat-x;
     position: relative;
-    z-index: 1
+    z-index: 1;
 }
 
 footer span {
@@ -66,6 +68,8 @@ footer span a {
 
 .index-bg {
     background-color: #353535;
+    display:flex;
+    flex-direction:row;
 }
 ul {
     list-style: none;
@@ -90,3 +94,96 @@ header nav li {
 header nav li a:hover {
     color: yellow;
 }
+#index-col-1 {
+    flex: 1;
+    border: outset;
+    border-width: 3px;
+    border-color: lawngreen;
+    margin-left: 10px;
+    min-height: 600px;
+    padding: 5px;
+}
+#index-col-2 {
+    flex: 3 12em;
+    border: inset;
+    border-width: 7px;
+    border-color: lawngreen;
+    margin-left: 10px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    
+}
+#index-col-3 {
+    flex: 2;
+    border: outset;
+    border-width: 3px;
+    border-color: lawngreen;
+    margin-left: 10px;
+}
+form {
+   min-width: 450px;   
+}
+.btn, .btn-link {
+    background-color: #addb00;
+    font-size: 16pt;
+    margin-top: 7px;
+    min-width: 150px;
+
+}
+.btn:hover{
+    border:2px solid;
+    border-color: deepskyblue;
+    color:deepskyblue;
+}
+.myform {
+    color: lavenderblush;
+    font-size: 16pt;    
+}
+a:hover{
+    color:lawngreen;
+}
+hr {
+    color: #addb00;
+    height: 5px;
+}
+.more {
+    font: 14pt Arial, Helvetica, sans-serif;
+    color: #74be00;
+    width: 150px;
+    text-align: center;
+    text-decoration: none
+}
+.user-panel {
+    font-family: Arial, Monotype Corsiva;
+    font-size: 16pt;
+    color: #addb00;
+    text-align:left;
+}
+.user-panel-1 {
+    text-align: right;
+    display: inline;
+    color: whitesmoke;
+    font-weight: bold;
+    text-align: left;
+    font-size: 16pt;
+}
+
+.btn-new {
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: darkslategrey;
+    box-shadow: 0 0 10px #eee;
+    border-radius: 10px;
+    background-image: linear-gradient(to left, lightgrey 0%, green 51%, lawngreen 100%);
+    font-weight:bold;
+}
+
+    .btn-new:hover {
+        background-position: right center;
+        box-shadow: 0 0 20px #eee;
+    }
+
+
