@@ -82,6 +82,7 @@ namespace Portal.BLL.Services
             {
                 UserDTO udto = new UserDTO
                 {
+                    Id = user.Id,
                     Name = user.Name,
                     LoginMail = user.LoginMail,
                     StatusAdmin = user.StatusAdmin,
