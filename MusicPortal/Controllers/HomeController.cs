@@ -31,6 +31,7 @@ namespace MusicPortal.Controllers
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();
+            ViewBag.UserId = null;
             return RedirectToAction("Index");
         }
     }

@@ -72,9 +72,14 @@ namespace MusicPortal.Controllers
                     Password = user.Password,
                 };   
                 await _context.CreateUser(us);
-                HttpContext.Session.SetString("Name", user.Name);
-                HttpContext.Session.SetString("Login", user.LoginMail);
-                return RedirectToAction("Index", "Home");
+                udto = await _context.GetUserByLog(user.LoginMail);
+                if (udto != null)
+                {
+                    HttpContext.Session.SetString("Name", udto.Name);
+                    HttpContext.Session.SetString("Login", udto.LoginMail);
+                    ViewBag.UserId = udto.Id;
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View(user);
         }
@@ -193,6 +198,10 @@ namespace MusicPortal.Controllers
                 }
                 HttpContext.Session.SetString("Name", udto.Name);
                 HttpContext.Session.SetString("Login", udto.LoginMail);
+                if(udto.StatusAdmin)
+                {
+                    HttpContext.Session.SetInt32("Admin", 1);
+                }
                 return RedirectToAction("Index", "Home");
             }
             return View(logon);
