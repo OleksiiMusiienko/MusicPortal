@@ -34,20 +34,44 @@
            </ul>
 	    </nav>
        </div>	    
-     <div class="col-2">
-            @if (@Context.Session.GetString("Name") != null)
-            {
-                <p class="navbar-brand username" style="text-align: right; color:whitesmoke; font-weight: bold;"> Здравствуйте, @Context.Session.GetString("Name") (@Context.Session.GetString("Login"))</p>
-            }
+     <div class="col-2">           
      </div>
 	
     </header>
     <div class="index-bg">
-        <main role="main">
+        <div id="index-col-1">
+            @if (@Context.Session.GetString("Name") != null)
+            {
+                <p class="user-panel" style="text-align:center;">Панель пользователя</p>
+                <hr />
+				<p class="user-panel-1" style="text-align:center;">Привет @Context.Session.GetString("Name")!</p>
+                <p></p>
+                <p class="user-panel" style="display:inline;">Логин:</p>
+                <p class="user-panel-1" > (@Context.Session.GetString("Login"))</p>
+                <hr />
+                if (@Context.Session.GetInt32("Admin") == 1)
+                {
+                    <p class="user-panel" style="display:inline;">Статус:</p>
+                    <p class="user-panel-1">администратор</p>
+                    
+                }
+                else
+                {
+                    <p class="user-panel" style="display:inline;">Статус:</p>
+                    <p class="user-panel-1" >пользователь</p>
+                    <form asp-action="Edit" asp-controller="Users">
+                        <button class="btn-new">Редактировать профиль</button>
+                    </form>
+                }
+               
+            }
+        </div>
+        <main id="index-col-2" role="main">
             @RenderBody()
         </main>
+        <div id="index-col-3"></div>
     </div>
-
+    <div style="height: 7px"></div>
     <footer class="footer">
        <div class="container">
             &copy; 2024 - MusicPortal all rights reserved!
