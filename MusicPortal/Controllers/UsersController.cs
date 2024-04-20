@@ -59,7 +59,7 @@ namespace MusicPortal.Controllers
             UserDTO udto = await _context.GetUserByLog(user.LoginMail);
             if (udto != null)
             {
-               ModelState.AddModelError("", "Такой логин занят!");
+               ModelState.AddModelError("LoginMail", "Такой логин занят!");
                 return View(user);
             }
            
