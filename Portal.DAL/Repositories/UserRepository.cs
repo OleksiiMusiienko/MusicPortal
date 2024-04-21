@@ -21,11 +21,18 @@ namespace Portal.DAL.Repositories
             User? user = await db.Users.FindAsync(id);
             return user!;
         }
-        public async Task<User> GetUserName(string name)
+        public async Task<User> GetUserLog(string name)
         {
             var users = await db.Users.Where(a => a.LoginMail == name).ToListAsync();
             User? user = users?.FirstOrDefault();
             return user;
+        }
+        public async Task<bool> GetAdmin()
+        {
+            var users = await db.Users.Where(a => a.StatusAdmin == true).ToListAsync();
+            if (users.Count != 0)
+                return true;
+            return false;
         }
         public async Task Create(User us)
         {

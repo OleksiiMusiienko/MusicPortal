@@ -13,7 +13,8 @@ namespace Portal.BLL.Interfaces
         Task UpdateUser(UserDTO userDTO);
         Task DeleteUser(int id);
         Task<UserDTO> GetUserById(int id);
-        Task<UserDTO> GetUserByLog(string name);
+        Task<bool> GetAdmin();
+        Task<UserDTO> GetUserByLog(string log);
         Task<IEnumerable<UserDTO>> GetAllUsers();      
     }
 }

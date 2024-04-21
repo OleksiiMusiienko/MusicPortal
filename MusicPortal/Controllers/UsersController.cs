@@ -57,26 +57,46 @@ namespace MusicPortal.Controllers
         {
             UserDTO udto = await _context.GetUserByLog(user.LoginMail);
             if (udto != null)
-            {
-               ModelState.AddModelError("LoginMail", "Такой логин занят!");
-                return View(user);
+            {               
+                    ModelState.AddModelError("LoginMail", "Такой логин занят!");
+                    return View(user);                
             }
-           
+
+            if (user.Name == "Admin" || user.Name == "admin" || user.Name == "Administrator" || user.Name == "administrator"
+            || user.Name == "Админ" || user.Name == "Администратор")
+            {
+                if (await _context.GetAdmin())
+                {
+                    ModelState.AddModelError("Name", "Имя администратора использовать запрещено!");
+                    return View(user);
+                }
+                else
+                {
+                    udto = new UserDTO();
+                    udto.StatusAdmin = true;
+                }
+            }            
             if (ModelState.IsValid)
             {
-                var us = new UserDTO
+                if(udto == null)
                 {
-                    Name = user.Name,
-                    LoginMail = user.LoginMail,
-                    Password = user.Password,
-                };   
-                await _context.CreateUser(us);
+                    udto = new UserDTO();
+                }
+                udto.Name = user.Name;
+                udto.LoginMail = user.LoginMail;
+                udto.Password = user.Password;
+                  
+                await _context.CreateUser(udto);
                 udto = await _context.GetUserByLog(user.LoginMail);
                 if (udto != null)
                 {
+                    if(udto.StatusAdmin)
+                    {
+                        HttpContext.Session.SetInt32("Ident", 1);
+                    }
                     HttpContext.Session.SetString("Name", udto.Name);
                     HttpContext.Session.SetString("Login", udto.LoginMail);
-                    ViewBag.UserId = udto.Id;
+                    HttpContext.Session.SetInt32("Ident", udto.Id);
                     return RedirectToAction("Index", "Home");
                 }
             }

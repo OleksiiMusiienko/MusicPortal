@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Win32;
 using Portal.BLL.DTO;
 using Portal.BLL.Infrastructure;
 using Portal.BLL.Interfaces;
@@ -24,12 +25,17 @@ namespace Portal.BLL.Services
             {
                 Name = userDTO.Name,
                 LoginMail = userDTO.LoginMail,
-                StatusAdmin = false,
-                Password = userDTO.Password,
-                Salt = "",
-                Register = true,
+                StatusAdmin = userDTO.StatusAdmin,               
                 DateReg = DateTime.Now.ToString()
             };
+            if (userDTO.StatusAdmin)
+            {
+                user.Register = false;
+            }
+            else
+            {
+                user.Register = true;
+            }
             EncodingPassword(userDTO, user);
             await Database.Users.Create(user);
             await Database.Save();
@@ -73,7 +79,7 @@ namespace Portal.BLL.Services
         }
         public async Task<UserDTO> GetUserByLog(string log)
         {
-            User user = await Database.Users.GetUserName(log);
+            User user = await Database.Users.GetUserLog(log);
             if (user != null)
             {
                 UserDTO udto = new UserDTO
@@ -93,8 +99,17 @@ namespace Portal.BLL.Services
                 UserDTO udto = null;
                 return udto;
             }
-            
-
+        }
+        public async Task<bool> GetAdmin()
+        {
+            if (await Database.Users.GetAdmin())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {

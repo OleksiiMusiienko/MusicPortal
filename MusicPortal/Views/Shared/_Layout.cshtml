@@ -52,7 +52,8 @@
                 if (@Context.Session.GetInt32("Admin") == 1)
                 {
                     <p class="user-panel" style="display:inline;">Статус:</p>
-                    <p class="user-panel-1">администратор</p>                    
+                    <p class="user-panel-1">администратор</p>
+                    <a class="navbar-brand btn-new" asp-controller="Users" asp-action="Edit" asp-route-id="@Context.Session.GetInt32("Ident")">Редактирование профиля</a>
                 }
                 else
                 {
