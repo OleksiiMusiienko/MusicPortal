@@ -2,7 +2,7 @@
 
 namespace MusicPortal.Models
 {
-    public class RegisterModel
+    public class EditModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Поле должно быть установлено")]
@@ -15,14 +15,19 @@ namespace MusicPortal.Models
         public string? LoginMail { get; set; }
 
         [Required(ErrorMessage = "Поле должно быть установлено")]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Старый пароль")]
         [DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S{6,16}$", ErrorMessage = "Пароль должен быть не менее 6 знаков, большие, маленькие буквы, символы")]
+        
         public string? Password { get; set; } //при доступе админа в пароль присваивать null for  - public async Task UpdateUser(UserDTO userDTO), там проверка
 
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [Display(Name = "Новый пароль")]
         [DataType(DataType.Password)]
-        public string? PasswordConfirm { get; set; }       
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S{6,16}$", ErrorMessage = "Пароль должен быть не менее 6 знаков, большие, маленькие буквы, символы")]
+        public string? NewPassword { get; set; }
+
+        [Compare("NewPassword", ErrorMessage = "Пароли не совпадают")]
+        [DataType(DataType.Password)]
+        public string? PasswordConfirm { get; set; }      
         
     }
 }

@@ -40,14 +40,10 @@ namespace Portal.BLL.Services
             {
                 Id = userDTO.Id,
                 Name = userDTO.Name,
-                LoginMail = userDTO.LoginMail,
-                StatusAdmin = userDTO.StatusAdmin
+                LoginMail = userDTO.LoginMail
             };
+            EncodingPassword(userDTO, user);
             
-            if (userDTO.Password != null)
-            {
-                user.Password = userDTO.Password;
-            }
             lock (this)
             {
                 Database.Users.Update(user);
