@@ -25,14 +25,11 @@ namespace Portal.BLL.Services
             {
                 Name = userDTO.Name,
                 LoginMail = userDTO.LoginMail,
-                StatusAdmin = userDTO.StatusAdmin,               
+                StatusAdmin = userDTO.StatusAdmin,
+                Register = userDTO.Register,
                 DateReg = DateTime.Now.ToString()
             };
             if (userDTO.StatusAdmin)
-            {
-                user.Register = false;
-            }
-            else
             {
                 user.Register = true;
             }
@@ -40,20 +37,39 @@ namespace Portal.BLL.Services
             await Database.Users.Create(user);
             await Database.Save();
         } 
-        public async Task UpdateUser(UserDTO userDTO)
+        public async Task UpdateUser(UserDTO userDTO, bool confirm = false)
         {
             var user = new User
             {
                 Id = userDTO.Id,
                 Name = userDTO.Name,
-                LoginMail = userDTO.LoginMail
+                LoginMail = userDTO.LoginMail,
+                Register = userDTO.Register,
+                StatusAdmin = userDTO.StatusAdmin,
+                DateReg = userDTO.DateReg
             };
-            EncodingPassword(userDTO, user);
-            
-            lock (this)
+            if (!confirm)
             {
-                Database.Users.Update(user);
+                EncodingPassword(userDTO, user);
             }
+            else
+            {
+                if (userDTO.Password != null)
+                {
+                    user.Password = userDTO.Password;
+                }
+                if (userDTO.Salt != null)
+                {
+                    user.Salt = userDTO.Salt;
+                }
+                if (userDTO.DateReg != null)
+                {
+                    user.DateReg = userDTO.DateReg;
+                }
+                user.StatusAdmin = userDTO.StatusAdmin;                
+            }
+            Database.Users.Update(user);
+            
           await Database.Save();
         }
         public async Task DeleteUser(int id)
@@ -74,7 +90,8 @@ namespace Portal.BLL.Services
                 StatusAdmin = user.StatusAdmin,
                 Password = user.Password,
                 Salt = user.Salt,
-                DateReg = user.DateReg
+                DateReg = user.DateReg,
+                Register = user.Register
             };
         }
         public async Task<UserDTO> GetUserByLog(string log)
@@ -90,7 +107,8 @@ namespace Portal.BLL.Services
                     StatusAdmin = user.StatusAdmin,
                     Password = user.Password,
                     Salt = user.Salt,
-                    DateReg = user.DateReg
+                    DateReg = user.DateReg,
+                    Register = user.Register
                 };
                 return udto;
             }
@@ -148,12 +166,10 @@ namespace Portal.BLL.Services
                 usdto.Password = hash.ToString();
             }
         }
-        //private bool UserExists(int id)
-        //{
-        //    var udto = Database.Users.GetUserId(id);
-        //    if (udto != null)
-        //        return true;
-        //    else return false;
-        //}
+        public async Task<IEnumerable<UserDTO>> GetUsersRegister()
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(await Database.Users.GetUsersRegister());
+        }
     }
 }

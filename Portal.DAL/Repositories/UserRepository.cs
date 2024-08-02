@@ -66,5 +66,9 @@ namespace Portal.DAL.Repositories
                 Update(us);
             }
         }
+        public async Task<IEnumerable<User>> GetUsersRegister()
+        {
+            return await db.Users.Where(a=>a.Register == false).ToListAsync();
+        }
     }
 }

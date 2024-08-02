@@ -1,33 +1,50 @@
 ﻿@model MusicPortal.Models.RegisterModel
 <div class="myform">
-<h4>Регистрация</h4>
+<h4>Регистрация пользователя</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>         
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>          
             <div class="form-group">
-                <label asp-for="LoginMail" class="control-label">Имя</label>
-                <input asp-for="Name" class="form-control" placeholder="Имя" />
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LoginMail" class="control-label">Логин</label>
-                <input asp-for="LoginMail" class="form-control" placeholder="Введите ваш E-mail в качестве логина" />
+                <label asp-for="LoginMail" class="control-label"></label>
+                <input asp-for="LoginMail" class="form-control" />
                 <span asp-validation-for="LoginMail" class="text-danger"></span>
-            </div>         
+            </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label">Пароль</label>
-                <input asp-for="Password" class="form-control" placeholder="Не менее 6 знаков, большие, маленькие буквы, символы" />
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PasswordConfirm" class="control-label">Пароль</label>
-                <input asp-for="PasswordConfirm" class="form-control" placeholder="Повторите пароль" />
+                <label asp-for="PasswordConfirm" class="control-label"></label>
+                <input asp-for="PasswordConfirm" class="form-control" />
                 <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-            </div>         
+            </div>
+                @if (@Context.Session.GetInt32("Admin") == 1)
+                {
+                     <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Register" />
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group form-check" style="visibility:hidden;">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Register" />
+                        </label>
+                    </div>
+                }                
+                <input type="hidden" asp-for="DateReg" class="form-control"/>               
             <div class="form-group">
-                <input type="submit" value="Отправить" class="btn btn-primary" />
+                <input type="submit" value="Регистрация" class="btn btn-primary" />
             </div>
         </form>
     </div>

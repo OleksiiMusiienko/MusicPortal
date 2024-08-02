@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Portal.BLL.DTO.UserDTO>
+@if (@Context.Session.GetInt32("Admin") == 1)
+{
+    <div class="list-style-div">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="visibility:hidden;">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        Имя
+                    </th>
+                    <th>
+                        Логин
+                    </th>
+                    <th>
+                        Администратор
+                    </th>
+                    <th>
+                        Дата
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="visibility:hidden;">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LoginMail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StatusAdmin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateReg)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Подтвердить", "RegisterConfirm", item/* , new { id = item.Id } */) |
+                            @Html.ActionLink("Удалить", "Delete"/* , new { id = item.Id } */)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

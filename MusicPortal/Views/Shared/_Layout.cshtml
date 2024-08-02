@@ -11,61 +11,109 @@
 </head>
 <body>
     <header class="header-container">
-      <div class="col-1">
-        <nav>
-           <ul>
-               <li class="nav-item">
-                        <a id="link-1" class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                </li>
-                    <li class="nav-item">
-                        <a id="link-2" class="navbar-brand mylink" asp-area="" asp-controller="Users" asp-action="Create">Регистрация</a>
-                    </li>
-                    <li>
-                        @if (@Context.Session.GetString("Name") == null)
-                            {
-                                <a id="link-3" class="navbar-brand mylink" asp-area="" asp-controller="Users" asp-action="Logon">Войти</a>
-                            }
-                            else
-                            {
-                                 <a id="link-3" class="navbar-brand mylink" asp-area="" asp-controller="Home" asp-action="Logout">Выйти</a>
-                            
-                            }
-                    </li>
-           </ul>
-	    </nav>
-       </div>	    
-     <div class="col-2">           
-     </div>
-	
-    </header>
-    <div class="index-bg">
-        <div id="index-col-1">
-            @if (@Context.Session.GetString("Name") != null)
-            {
-                <p class="user-panel" style="text-align:center;">Панель пользователя</p>
-                <hr />
-				<p class="user-panel-1" style="text-align:center;">Привет @Context.Session.GetString("Name")!</p>
-                <p></p>
-                <p class="user-panel" style="display:inline;">Логин:</p>
-                <p class="user-panel-1" > (@Context.Session.GetString("Login"))</p>
-                <hr />
+             <div class="col-1"></div>
+            
+             <nav>
+                 <div class="ndb">
+                <a id="link-1" class="navbar-brand btn-new" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+			      </div>
+                 <div class ="ndb">
+                <a id="link-2" class="navbar-brand btn-new" asp-area="" asp-controller="Users" asp-action="Create">Регистрация</a>
+                  </div>
+                  <div class="ndb">
+                    @if (@Context.Session.GetString("Name") == null)
+                     {
+                    <a id="link-3" class="navbar-brand btn-new" asp-area="" asp-controller="Users" asp-action="Logon">Войти</a>
+                     }
+                    else
+                     {
+                    <a id="link-3" class="navbar-brand btn-new" asp-area="" asp-controller="Home" asp-action="Logout">Выйти</a>
+
+                     }
+                  </div>
+			</nav>     
+            <div class="panel-user">
+               @if (@Context.Session.GetString("Name") != null)
+              {
+                <p class="user-panel" style="text-align:right; font-weight: bold; margin:5px; color:darkred;">Панель пользователя</p>
+                <p class="user-panel-1" style="text-align:center; margin:5px">Привет @Context.Session.GetString("Name")!</p>
+                <p style="visibility: hidden; "></p>
+                <p class="user-panel" style="display:inline; margin:5px">Логин:</p>
+                <p class="user-panel-1" style="margin:5px"> (@Context.Session.GetString("Login"))</p>
+                <p style="visibility: hidden;"></p>
+                <p class="user-panel" style="display:inline;">Статус:</p>
                 if (@Context.Session.GetInt32("Admin") == 1)
-                {
-                    <p class="user-panel" style="display:inline;">Статус:</p>
-                    <p class="user-panel-1">администратор</p>
-                    <a class="navbar-brand btn-new" asp-controller="Users" asp-action="Edit" asp-route-id="@Context.Session.GetInt32("Ident")">Редактирование профиля</a>
+                {                   
+                    <p class="user-panel-1">администратор</p>                                  
                 }
                 else
-                {
-                    <p class="user-panel" style="display:inline;">Статус:</p>
-                    <p class="user-panel-1" >пользователь</p>
-                    <a class="navbar-brand btn-new" asp-controller="Users" asp-action="Edit" asp-route-id="@Context.Session.GetInt32("Ident")">Редактирование профиля</a>
+                {      
+                    <p class="user-panel-1">пользователь</p>                   
                 }
-               
+                <p style="visibility: hidden;"></p>
+                <a class="navbar-brand btn-new" asp-controller="Users" asp-action="EditUser" asp-route-id="@Context.Session.GetInt32("Ident")">Редактировать</a>
+            }
+            else
+            {
+                <p class="user-panel" style="text-align:right; font-weight: bold; margin:5px; color:darkred;">Регистрация дает <br /> больше возможностей</p>
             }
         </div>
+    </header>
+   
+    <div class="index-bg">
+        <div id="index-col-1">
+           <div id="filtr">
+               <h4>Сортировать</h4>
+               <form asp-action="SongFilter" asp-controller="Song">
+                <input type="radio" value="genre" id="genre" name="radio-filtr" />
+                <span for="genre">по жанру</span><br />
+                <input type="radio" value="name" id="treck-name" name="radio-filtr" />
+                <span for="name">по названию</span><br />
+                <input type="radio" value="executor" id="executor" name="radio-filtr" />
+                <span for="executor">по исполнителю</span><br />
+                    <p style="visibility: hidden;"></p>
+                    <div class="form-group">
+                        <input type="submit" value="Применить" id="input-form-sort" />
+                    </div>
+                </form>
+           </div>
+           <hr />
+            <div id="filtr">
+                <h4>Поиск</h4>
+                <form asp-action="SongFilter" asp-controller="Song">
+                    <input size="26" type="text" name="text_search" value="" required /><br />
+                    <input type="radio" value="name" id="treck-name" name="radio-filtr" />
+                    <span for="name">по названию</span><br />
+                    <input type="radio" value="executor" id="executor" name="radio-filtr" />
+                    <span for="executor">по исполнителю</span><br />
+                    <p style="visibility: hidden;"></p>
+                    <div class="form-group">
+                        <input type="submit" value="Применить" id="input-form-sort" />
+                    </div>
+                </form>
+            </div>
+        </div>
         <main id="index-col-2" role="main">
+          
+            @if (@Context.Session.GetInt32("Admin") == 1)
+            {  
+             <div id="admin-panel">
+              <a class="navbar-brand btn-new" asp-controller="Users" asp-action="Index">Пользователи</a>
+              <a class="navbar-brand btn-new" asp-controller="" asp-action="" asp-route-id="">Жанры</a>
+			  <a class="navbar-brand btn-new" asp-controller="" asp-action="" asp-route-id="">Песни</a>
+			 </div>
+                <hr/>
+            }  
+            else if (@Context.Session.GetInt32("Ident") != null)
+            {
+                <div id="admin-panel">
+                <a class="navbar-brand btn-new" asp-controller="" asp-action="" asp-route-id="">Добавить песню</a>
+                </div>
+                <hr />
+            }
+         <div id="render-div">
             @RenderBody()
+          </div>
         </main>
         <div id="index-col-3"></div>
     </div>

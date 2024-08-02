@@ -4,7 +4,7 @@ namespace MusicPortal.Models
 {
     public class RegisterModel
     {
-        public int Id { get; set; }
+       
         [Required(ErrorMessage = "Поле должно быть установлено")]
         [Display(Name = "Имя")]        
         public string? Name { get; set; }
@@ -22,7 +22,10 @@ namespace MusicPortal.Models
 
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         [DataType(DataType.Password)]
-        public string? PasswordConfirm { get; set; }       
-        
+        [Display(Name = "Повторите пароль")]
+        public string? PasswordConfirm { get; set; } 
+        public bool Register {  get; set; }
+        public string? DateReg { get; set; }
+
     }
 }

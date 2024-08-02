@@ -45,7 +45,12 @@ namespace MusicPortal.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("Admin") == null)
+            {
+                HttpContext.Session.Clear();
+                ViewBag.UserId = null;
+            }
+			return View();
         }
 
         // POST: Users/Create
@@ -53,7 +58,7 @@ namespace MusicPortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,LoginMail,Password,PasswordConfirm")] RegisterModel user)
+        public async Task<IActionResult> Create([Bind("Id,Name,LoginMail,Password,PasswordConfirm,Register,DateReg")] RegisterModel user)
         {
             UserDTO udto = await _context.GetUserByLog(user.LoginMail);
             if (udto != null)
@@ -85,41 +90,41 @@ namespace MusicPortal.Controllers
                 udto.Name = user.Name;
                 udto.LoginMail = user.LoginMail;
                 udto.Password = user.Password;
-                  
+                udto.StatusAdmin = false;
+                udto.Register = user.Register;
                 await _context.CreateUser(udto);
-                udto = await _context.GetUserByLog(user.LoginMail);
-                if (udto != null)
+                if (HttpContext.Session.GetInt32("Admin") == 1)
                 {
-                    if(udto.StatusAdmin)
-                    {
-                        HttpContext.Session.SetInt32("Ident", 1);
-                    }
-                    HttpContext.Session.SetString("Name", udto.Name);
-                    HttpContext.Session.SetString("Login", udto.LoginMail);
-                    HttpContext.Session.SetInt32("Ident", udto.Id);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Users");
                 }
+                return RedirectToAction("Index", "Home");
             }
+           
             return View(user);
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditUser(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-           UserDTO user = await _context.GetUserById((int)id);           
+           UserDTO user = await _context.GetUserById((int)id);//запихнуть пользователя во вьюбег и поменять вьюшку на реджистер модел           
             if (user == null)
             {
                 return NotFound();
             }
-            RegisterModel edus = new RegisterModel
+            HttpContext.Session.SetString("Date", user.DateReg);
+            if (user.StatusAdmin)
+            {
+                HttpContext.Session.SetInt32("Admin", 1);
+            }
+                EditUserModel edus = new EditUserModel
             {
                 Id = user.Id,
                 Name = user.Name,
-                LoginMail = user.LoginMail,
+                LoginMail = user.LoginMail
             };
             return View(edus);
         }
@@ -129,7 +134,7 @@ namespace MusicPortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,LoginMail,Password,PasswordConfirm")] RegisterModel us)
+        public async Task<IActionResult> EditUser(int id, [Bind("Id,Name,LoginMail,Password,PasswordConfirm")] EditUserModel us)
         {
             if (id != us.Id)
             {
@@ -140,8 +145,14 @@ namespace MusicPortal.Controllers
                 Id = us.Id,
                 Name = us.Name,
                 Password = us.Password,
-                LoginMail = us.LoginMail
-            };        
+                LoginMail = us.LoginMail,
+                Register = true,
+                DateReg = HttpContext.Session.GetString("Date"),                
+        };            
+            if (HttpContext.Session.GetInt32("Admin") == 1)
+            {
+                user.StatusAdmin = true;
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -204,12 +215,18 @@ namespace MusicPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(await _context.GetUserByLog(logon.LoginMail) == null)
+                UserDTO udto = await _context.GetUserByLog(logon.LoginMail);
+                if (udto == null)
                 {
                     ModelState.AddModelError("", "Ошибка в логине или пароле!");
                     return View(logon);
                 }
-                UserDTO udto = await _context.GetUserByLog(logon.LoginMail);
+                else if(!udto.Register)
+                {
+                    ModelState.AddModelError("", "Ожидается подтверждение регистрации!");
+                    return View(logon);
+                }
+                
                 string? salt = udto.Salt;
 
                 //переводим пароль в байт-массив  
@@ -237,6 +254,77 @@ namespace MusicPortal.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View(logon);
+        }
+
+        public async Task<IActionResult> Confirm()
+        {
+            return View(await _context.GetUsersRegister());
+        }
+        public async Task<IActionResult> RegisterConfirm(UserDTO user)
+        {
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Register = true;
+                try
+                {
+                    await _context.UpdateUser(user, true);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }                     
+            return RedirectToAction("Confirm");
+        }
+        public IActionResult EditAdmin(UserDTO user)
+        {           
+            if (user == null)
+            {
+                return NotFound();
+            }
+            EditUserAdmin edit_user = new EditUserAdmin
+            {
+                Id = user.Id,
+                Name = user.Name,
+                LoginMail = user.LoginMail,
+                StatusAdmin = user.StatusAdmin,
+                Register = user.Register
+            };
+            
+            return View(edit_user);
+        }
+        public async Task<IActionResult> EditUserAdmin(int id, [Bind("Id,Name,LoginMail,StatusAdmin,Register")] EditUserAdmin us)
+        {
+            if (id != us.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                UserDTO user = new UserDTO
+                {
+                    Id = us.Id,
+                    Name = us.Name,
+                    LoginMail = ViewBag.User.LoginMail,
+                    StatusAdmin = us.StatusAdmin,
+                    Password = ViewBag.User.Password,
+                    Salt = ViewBag.User.Salt,
+                    Register = us.Register,
+                    DateReg = ViewBag.User.DateReg
+                };
+               
+                try
+                {               
+                    await _context.UpdateUser(user, true);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("Logon");
+            }
+            return RedirectToAction("Index");
         }
     }
 }

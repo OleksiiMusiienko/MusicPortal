@@ -1,11 +1,13 @@
-﻿@model MusicPortal.Models.RegisterModel
+﻿@model MusicPortal.Models.EditUserModel
 <div class="myform">
-    <h4>Редактирование профиля</h4>
+<h4>Редактирование профиля</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="EditUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
+             <input type="hidden" asp-for="Id" class="form-control" />
+                
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -18,14 +20,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" value=""/>
+                <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+            </div>            
             <div class="form-group">
                 <label asp-for="PasswordConfirm" class="control-label"></label>
-                <input asp-for="PasswordConfirm" class="form-control" value="" />
+                <input asp-for="PasswordConfirm" class="form-control" />
                 <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-            </div>
+            </div>       
+                
             <div class="form-group">
                 <input type="submit" value="Изменить" class="btn btn-primary" />
             </div>

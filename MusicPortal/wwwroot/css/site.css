@@ -22,29 +22,31 @@ body {
     flex-direction: column;
     justify-content: center;
 }
-header nav {
-    width: 1300px;
-    height: 300px;
-    position: relative;
-    background: url(/images/header-bg.jpg) no-repeat;
-    text-align: center;
+ nav {
+   display:flex;
+   flex-direction: row;
+   position:relative;
+   left: -550px;
+   top: 35px;
+   height: 50px;
+   width: 100px;  
 }
 .header-container {
     display: flex;
+    flex-direction: row;
     width: 100%;
-    height: 309px;
-    height:300px;
-}
-
-.col-1 {
-    flex: 1 1 auto;
-    height: 309px;
-}
-
-.col-2 {
-    flex: 11 1 auto;
+    height: 292px;
     background: url(/images/header-bg-right.jpg) repeat-x;
+    margin-bottom: 5px;
 }
+
+.col-1 { 
+    display:flex;
+    background: url('/images/header-bg.jpg') no-repeat;
+    width: 1088px;
+ }
+
+
 
 footer {
     text-align: center;
@@ -83,19 +85,23 @@ header nav li {
     font-size: 24pt;
 }
 #link-1{
-    margin-left: 200px;
+    margin-left: 20px;
+    font-size:18pt;
 }
 #link-2 {
-    margin-left: 50px;
+    margin-left: 20px;
+    font-size: 18pt;
 }
 #link-3 {
-    margin-left: 50px;
+    margin-left: 20px;
+    font-size: 18pt;
 }
 header nav li a:hover {
     color: yellow;
 }
 #index-col-1 {
-    flex: 1;
+    width:300px;
+    flex-direction:column;
     border: outset;
     border-width: 3px;
     border-color: lawngreen;
@@ -104,19 +110,19 @@ header nav li a:hover {
     padding: 5px;
 }
 #index-col-2 {
-    flex: 3 12em;
-    border: inset;
+    flex: 3;
+    flex-direction:column;
+    /*border: inset;
     border-width: 7px;
-    border-color: lawngreen;
+    border-color: lawngreen;*/
     margin-left: 10px;
-    padding: 10px;
-    text-align: center;
+    padding: 10px;    
     display: flex;
-    justify-content: center;
+   
     
 }
 #index-col-3 {
-    flex: 2;
+    flex: 1;
     border: outset;
     border-width: 3px;
     border-color: lawngreen;
@@ -141,12 +147,12 @@ form {
     color: lavenderblush;
     font-size: 16pt;    
 }
-a:hover{
-    color:lawngreen;
+a:hover {
+    color: yellow;
 }
 hr {
     color: #addb00;
-    height: 5px;
+    height: 7px;
 }
 .more {
     font: 14pt Arial, Helvetica, sans-serif;
@@ -158,8 +164,8 @@ hr {
 .user-panel {
     font-family: Arial, Monotype Corsiva;
     font-size: 16pt;
-    color: #addb00;
-    text-align:left;
+    color: #353535;
+    text-align: left;
 }
 .user-panel-1 {
     text-align: right;
@@ -174,11 +180,15 @@ hr {
     text-align: center;
     transition: 0.5s;
     background-size: 200% auto;
-    color: darkslategrey;
+    color: whitesmoke;
     box-shadow: 0 0 10px #eee;
     border-radius: 10px;
     background-image: linear-gradient(to left, lightgrey 0%, green 51%, lawngreen 100%);
-    font-weight:bold;
+    font-weight: bold;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14pt;
 }
 
     .btn-new:hover {
@@ -186,4 +196,53 @@ hr {
         box-shadow: 0 0 20px #eee;
     }
 
-
+#button-nav{
+    margin-top: 50%;
+}
+.panel-user {
+    margin-top: 20px;
+    flex: 1;
+    text-align:right;
+    margin-right: 50px;
+}
+/*#filtr {
+    border: outset;
+    border-width: 3px;
+    border-color: lawngreen;
+    padding: 7px;
+}*/
+#filtr h4{
+    color: whitesmoke;
+    text-align:center;
+}
+#filtr span {
+    color: whitesmoke;
+    font-size: 18pt;
+}
+#input-form-sort {
+    background-color: #addb00;
+    font-size: 16pt;
+    margin-top: 7px;
+    min-width: 150px;
+    margin-left: 12%;
+}
+#admin-panel {
+   /* border: inset;
+    border-width: 3px;
+    border-color: lawngreen;*/
+    display: flex;
+    padding:5px;
+    height:fit-content;
+}
+#render-div{
+    justify-content:center;
+    text-align:center;
+    display:flex;
+}
+.table{
+    color: whitesmoke;
+}
+.list-style-div{
+    display:flex;
+    flex-direction:column;
+}

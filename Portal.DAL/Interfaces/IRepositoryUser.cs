@@ -12,5 +12,6 @@ namespace Portal.DAL.Interfaces
         void Update(User item);
         Task Delete(int id);
         void RegisterUser(User item);
+        Task<IEnumerable<User>> GetUsersRegister();
     }
 }
