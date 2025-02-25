@@ -1,8 +1,14 @@
-﻿namespace Portal.BLL.DTO
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace Portal.BLL.DTO
 {
     public class UserDTO
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage ="Заполните поле")]
+        [Display (Name = "Имя")]
         public string? Name { get; set; }
         public string? LoginMail { get; set; }
         public bool StatusAdmin { get; set; } //свойство статус определяет права пользователя (админ или пользователь), доступ админ +

@@ -10,7 +10,7 @@ namespace MusicPortal.Models
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "Поле должно быть установлено")]
-        [Display(Name = "Логин")]
+        [Display(Name = "Логин(E-mail)")]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес электронной почты")]
         public string? LoginMail { get; set; }
 

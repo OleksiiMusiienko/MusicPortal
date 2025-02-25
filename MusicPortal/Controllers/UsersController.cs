@@ -60,46 +60,48 @@ namespace MusicPortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,LoginMail,Password,PasswordConfirm,Register,DateReg")] RegisterModel user)
         {
-            UserDTO udto = await _context.GetUserByLog(user.LoginMail);
-            if (udto != null)
-            {               
-                    ModelState.AddModelError("LoginMail", "Такой логин занят!");
-                    return View(user);                
-            }
-
-            if (user.Name == "Admin" || user.Name == "admin" || user.Name == "Administrator" || user.Name == "administrator"
-            || user.Name == "Админ" || user.Name == "Администратор")
+            UserDTO userDto = await _context.GetUserByLog(user.LoginMail);
+            if (userDto != null)
             {
-                if (await _context.GetAdmin())
-                {
-                    ModelState.AddModelError("Name", "Имя администратора использовать запрещено!");
-                    return View(user);
-                }
-                else
-                {
-                    udto = new UserDTO();
-                    udto.StatusAdmin = true;
-                }
-            }            
+                ModelState.AddModelError("LoginMail", "Такой логин занят!");
+                return View(user);
+            }
+            userDto = new UserDTO();
             if (ModelState.IsValid)
             {
-                if(udto == null)
+                if (user.Name == "Admin" || user.Name == "admin" || user.Name == "Administrator" || user.Name == "administrator"
+                    || user.Name == "Админ" || user.Name == "Администратор")
                 {
-                    udto = new UserDTO();
+                    if (await _context.GetAdmin())
+                    {
+                        ModelState.AddModelError("Name", "Имя администратора использовать запрещено!");
+                        return View(user);
+                    }
+                    else
+                    {
+                        userDto.Name = user.Name;
+                        userDto.LoginMail = user.LoginMail;
+                        userDto.Password = user.Password;
+                        userDto.StatusAdmin = true;
+                        userDto.Register = true;
+                        await _context.CreateUser(userDto);
+                        return RedirectToAction("Logon", "Users");
+                    }
                 }
-                udto.Name = user.Name;
-                udto.LoginMail = user.LoginMail;
-                udto.Password = user.Password;
-                udto.StatusAdmin = false;
-                udto.Register = user.Register;
-                await _context.CreateUser(udto);
+
+                userDto.Name = user.Name;
+                userDto.LoginMail = user.LoginMail;
+                userDto.Password = user.Password;
+                userDto.StatusAdmin = false;
+                userDto.Register = user.Register;
+                await _context.CreateUser(userDto);
                 if (HttpContext.Session.GetInt32("Admin") == 1)
                 {
                     return RedirectToAction("Index", "Users");
                 }
                 return RedirectToAction("Index", "Home");
             }
-           
+
             return View(user);
         }
 

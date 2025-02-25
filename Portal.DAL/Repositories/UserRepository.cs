@@ -21,9 +21,9 @@ namespace Portal.DAL.Repositories
             User? user = await db.Users.FindAsync(id);
             return user!;
         }
-        public async Task<User> GetUserLog(string name)
+        public async Task<User> GetUserLog(string log)
         {
-            var users = await db.Users.Where(a => a.LoginMail == name).ToListAsync();
+            var users = await db.Users.Where(a => a.LoginMail == log).ToListAsync();
             User? user = users?.FirstOrDefault();
             return user;
         }
@@ -36,14 +36,7 @@ namespace Portal.DAL.Repositories
         }
         public async Task Create(User us)
         {
-            try
-            {
-                await db.Users.AddAsync(us);
-            }
-            catch 
-            {
-                
-            }
+                await db.Users.AddAsync(us);           
             
         }
         public void Update(User us)
