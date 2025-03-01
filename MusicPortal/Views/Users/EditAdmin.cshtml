@@ -1,15 +1,13 @@
-﻿@model MusicPortal.Models.EditUserAdmin
+﻿@model Portal.BLL.DTO.UserDTO
 <div class="myform">
 <h4>Редактирование пользователя</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditUserAdmin">
+        <form asp-action="EditAdmin">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" style="visibility:hidden;">
-                <label asp-for="Id" class="control-label"></label>
+            <div class="form-group" style="display:none">
                 <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -31,6 +29,16 @@
                     <input class="form-check-input" asp-for="Register" /> @Html.DisplayNameFor(model => model.Register)
                 </label>
             </div>
+                <div class="form-group form-check" style="display:none">
+                    <input asp-for="DateReg"/>
+                </div>
+                <div class="form-group form-check" style="display:none">
+                    <input asp-for="Password" style="visibility:hidden" />
+                </div>
+                <div class="form-group form-check" style="display:none">
+                    <input asp-for="Salt" style="visibility:hidden" />
+                </div>         
+           
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>

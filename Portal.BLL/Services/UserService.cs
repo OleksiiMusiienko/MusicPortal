@@ -37,7 +37,7 @@ namespace Portal.BLL.Services
             await Database.Users.Create(user);
             await Database.Save();
         } 
-        public async Task UpdateUser(UserDTO userDTO, bool confirm = false)
+        public async Task UpdateUser(UserDTO userDTO/*, bool confirm = false*/)
         {
             var user = new User
             {
@@ -46,28 +46,22 @@ namespace Portal.BLL.Services
                 LoginMail = userDTO.LoginMail,
                 Register = userDTO.Register,
                 StatusAdmin = userDTO.StatusAdmin,
-                DateReg = userDTO.DateReg
-            };
-            if (!confirm)
-            {
-                EncodingPassword(userDTO, user);
-            }
-            else
-            {
-                if (userDTO.Password != null)
-                {
-                    user.Password = userDTO.Password;
-                }
-                if (userDTO.Salt != null)
-                {
-                    user.Salt = userDTO.Salt;
-                }
-                if (userDTO.DateReg != null)
-                {
-                    user.DateReg = userDTO.DateReg;
-                }
-                user.StatusAdmin = userDTO.StatusAdmin;                
-            }
+                DateReg = userDTO.DateReg,
+                Password = userDTO.Password,
+                Salt = userDTO.Salt
+            };            
+                EncodingPassword(userDTO, user);            
+           
+                //if (userDTO.Password != null)
+                //{
+                //    user.Password = userDTO.Password;
+                //}
+                //if (userDTO.Salt != null)
+                //{
+                //    user.Salt = userDTO.Salt;
+                //}
+               
+            
             Database.Users.Update(user);
             
           await Database.Save();

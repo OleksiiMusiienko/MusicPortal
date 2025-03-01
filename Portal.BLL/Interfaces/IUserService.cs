@@ -10,7 +10,7 @@ namespace Portal.BLL.Interfaces
     public interface IUserService
     {
         Task CreateUser(UserDTO userDTO);
-        Task UpdateUser(UserDTO userDTO, bool confirm = false);
+        Task UpdateUser(UserDTO userDTO/*, bool confirm = false*/);
         Task DeleteUser(int id);
         Task<UserDTO> GetUserById(int id);
         Task<bool> GetAdmin();

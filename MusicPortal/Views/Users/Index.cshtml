@@ -47,8 +47,8 @@
                             @Html.DisplayFor(modelItem => item.DateReg)
                         </td>
                         <td>
-                            @Html.ActionLink("Редактировать", "EditAdmin",item) |
-                            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                            @Html.ActionLink("Редактировать", "EditAdmin", new { id = item.Id }) |
+                            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
                         </td>
                     </tr>
                 }
