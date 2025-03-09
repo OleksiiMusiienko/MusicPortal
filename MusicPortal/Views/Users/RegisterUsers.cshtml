@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.DateReg)
             </td>
             <td>
-                @Html.ActionLink("Подтвердить регистрацию", "RegisterConfirm", new { id = item.Id })
+                @Html.ActionLink("Подтвердить регистрацию", "RegisterConfirm"/* , new { id = item.Id } */)
                 @Html.ActionLink("Delete", "Delete", new { id=item.Id})
             </td>
         </tr>

@@ -5,8 +5,8 @@ namespace Portal.DAL.Interfaces
     public interface IUnitOfWork
     {
         IRepositoryUser Users { get; }
-        IRepositorySG<Song> Songs { get; } 
-        IRepositorySG<Genre> Genres { get; }
+        IRepositorySong Songs { get; } 
+        IRepositoryGenre Genres { get; }
         Task Save();
     }
 }

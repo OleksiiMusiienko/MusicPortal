@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace MusicPortal.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -32,7 +32,7 @@ namespace MusicPortal.Controllers
         {
             HttpContext.Session.Clear();
             ViewBag.UserId = null;
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Song");
         }
     }
 }

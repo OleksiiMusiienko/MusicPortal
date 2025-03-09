@@ -5,27 +5,26 @@ using Portal.DAL.Interfaces;
 
 namespace Portal.DAL.Repositories
 {
-    public class SongRepository: IRepositorySG<Song>
+    public class SongRepository: IRepositorySong
     {
         PortalContext db;
         public SongRepository(PortalContext context)
         {
             db = context;
         }
-        public async Task<IEnumerable<Song>> GetAll()
+        public async Task<IEnumerable<Song>> GetAllSongs()
         {
             return await db.Songs.ToListAsync();
         }
-        public async Task<Song> GetId(int id)
+        public async Task<IEnumerable<Song>> GetSongsByGenre(Genre genre)
         {
-            Song? song = await db.Songs.FindAsync(id);
-            return song!;
+            var songs = await db.Songs.Where(s=>s.Genre == genre).ToListAsync();
+            return songs!;
         }
-        public async Task<Song> GetName(string name)
+        public async Task<IEnumerable<Song>> GetSongsByAuthor(string author)
         {
-            var songs = await db.Songs.Where(a => a.Name == name).ToListAsync();
-            Song? song = songs?.FirstOrDefault();
-            return song!;
+            var songs = await db.Songs.Where(s=>s.Author == author).ToListAsync();
+            return songs!;
         }
         public async Task Create(Song song)
         {
@@ -43,5 +42,17 @@ namespace Portal.DAL.Repositories
                 db.Songs.Remove(song);
             }
         }
+
+        //public async Task<Song> GetId(int id)
+        //{
+        //    Song? song = await db.Songs.FindAsync(id);
+        //    return song!;
+        //}
+        //public async Task<Song> GetName(string name)
+        //{
+        //    var songs = await db.Songs.Where(a => a.Name == name).ToListAsync();
+        //    Song? song = songs?.FirstOrDefault();
+        //    return song!;
+        //}
     }
 }

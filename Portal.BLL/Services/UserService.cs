@@ -37,7 +37,7 @@ namespace Portal.BLL.Services
             await Database.Users.Create(user);
             await Database.Save();
         } 
-        public async Task UpdateUser(UserDTO userDTO/*, bool confirm = false*/)
+        public async Task UpdateUser(UserDTO userDTO, bool confirm = false)
         {
             var user = new User
             {
@@ -49,18 +49,12 @@ namespace Portal.BLL.Services
                 DateReg = userDTO.DateReg,
                 Password = userDTO.Password,
                 Salt = userDTO.Salt
-            };            
-                EncodingPassword(userDTO, user);            
-           
-                //if (userDTO.Password != null)
-                //{
-                //    user.Password = userDTO.Password;
-                //}
-                //if (userDTO.Salt != null)
-                //{
-                //    user.Salt = userDTO.Salt;
-                //}
-               
+            };
+            if (!confirm)
+            {
+                  EncodingPassword(userDTO, user);  
+            }
+                         
             
             Database.Users.Update(user);
             
@@ -149,6 +143,7 @@ namespace Portal.BLL.Services
             StringBuilder hash = new StringBuilder(byteHash.Length);
             for (int i = 0; i < byteHash.Length; i++)
                 hash.Append(string.Format("{0:X2}", byteHash[i]));
+
             //если us == null - обращается верхний слой для шифрования и дальнейшего подтверждения пароля
             if (us != null)
             {

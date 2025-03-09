@@ -11,7 +11,8 @@ namespace Portal.BLL.Interfaces
     {
         Task CreateGenre(GenreDTO genreDTO);
         Task DeleteGenre(int id);
-        //Task<GenreDTO> GetGenreById(int id);
+        Task<GenreDTO> GetGenreById(int id);
+        Task<GenreDTO> GetGenreByName(string name);
         Task<IEnumerable<GenreDTO>> GetAllGenres();
     }
 }

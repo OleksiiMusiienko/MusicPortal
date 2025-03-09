@@ -1,4 +1,5 @@
 ﻿using Portal.BLL.DTO;
+using Portal.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,12 @@ namespace Portal.BLL.Interfaces
 {
     public interface ISongService
     {
-        Task CreateSong(SongDTO song);
-        Task DeleteSong(SongDTO song);
-        Task UpdateSong(SongDTO song);
-        Task<SongDTO> GetSong(int id);
+        Task Create(SongDTO song);
+        Task Delete(int id);
+        Task Update(SongDTO song);
         Task<IEnumerable<SongDTO>> GetAllSongs();
+        Task<IEnumerable<SongDTO>> GetSongsByGenre(Genre genre);
+        Task<IEnumerable<SongDTO>> GetSongsByAuthor(string author);
+        
     }
 }

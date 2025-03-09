@@ -23,7 +23,7 @@ namespace Portal.DAL.Repositories
                 return userRepository;
             }
         }
-        public IRepositorySG<Song> Songs
+        public IRepositorySong Songs
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Portal.DAL.Repositories
                 return songRepository;
             }
         }
-        public IRepositorySG<Genre> Genres
+        public IRepositoryGenre Genres
         {
             get
             {

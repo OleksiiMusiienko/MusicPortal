@@ -5,23 +5,23 @@ using Portal.DAL.Interfaces;
 
 namespace Portal.DAL.Repositories
 {
-    public class GenreRepository: IRepositorySG<Genre>
+    public class GenreRepository: IRepositoryGenre
     {
         PortalContext db;
         public GenreRepository(PortalContext context)
         {
             db = context;
         }
-        public async Task<IEnumerable<Genre>> GetAll()
+        public async Task<IEnumerable<Genre>> GetAllGenres()
         {
             return await db.Genres.ToListAsync();
         }
-        public async Task<Genre> GetId(int id)
+        public async Task<Genre> GetGenreById(int id)
         {
             Genre? gen = await db.Genres.FindAsync(id);
             return gen!;
         }
-        public async Task<Genre> GetName(string name)
+        public async Task<Genre> GetGenreByName(string name)
         {
             var genres = await db.Genres.Where(a => a.Name == name).ToListAsync();
             Genre? gen = genres?.FirstOrDefault();
@@ -30,11 +30,7 @@ namespace Portal.DAL.Repositories
         public async Task Create(Genre gen)
         {
             await db.Genres.AddAsync(gen);
-        }
-        public void Update(Genre gen)
-        {
-            db.Entry(gen).State = EntityState.Modified;
-        }
+        }       
         public async Task Delete(int id)
         {
             Genre? gen = await db.Genres.FindAsync(id);

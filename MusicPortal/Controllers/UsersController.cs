@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Portal.BLL.DTO;
-using Portal.BLL.Infrastructure;
-using Portal.BLL.Interfaces;
 using MusicPortal.Models;
-using NuGet.Protocol.Core.Types;
-using System.Text;
+using Portal.BLL.DTO;
+using Portal.BLL.Interfaces;
 using System.Security.Cryptography;
+using System.Text;
 
 
 namespace MusicPortal.Controllers
@@ -156,7 +154,7 @@ namespace MusicPortal.Controllers
             {
                 try
                 {                   
-                    await _context.UpdateUser(user);
+                    await _context.UpdateUser(user, false);
                 }
                 catch (DbUpdateConcurrencyException)
                 {                   
@@ -250,7 +248,7 @@ namespace MusicPortal.Controllers
                 {
                     HttpContext.Session.SetInt32("Admin", 1);
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Song");
             }
             return View(logon);
         }
@@ -268,7 +266,7 @@ namespace MusicPortal.Controllers
             user.Register = true;
                 try
                 {
-                    await _context.UpdateUser(user/*, true*/);
+                    await _context.UpdateUser(user, true);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

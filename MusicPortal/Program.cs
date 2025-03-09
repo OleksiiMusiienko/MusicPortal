@@ -10,6 +10,8 @@ builder.Services.AddPortalContext(connection);
 builder.Services.AddControllersWithViews();
 builder.Services.AddUnitOfWorkService();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IGenreService, GenreService>();
+builder.Services.AddTransient<ISongService, SongService>();
 builder.Services.AddDistributedMemoryCache();// добавляем IDistributedMemoryCache
 builder.Services.AddSession();  // Добавляем сервисы сессии
 var app = builder.Build();
@@ -28,6 +30,6 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Song}/{action=Index}/{id?}");
 
 app.Run();

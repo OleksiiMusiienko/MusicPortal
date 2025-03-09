@@ -241,8 +241,12 @@ hr {
 }
 .table{
     color: whitesmoke;
+    vertical-align:central;
 }
 .list-style-div{
     display:flex;
     flex-direction:column;
+}
+audio{
+    height:25px;
 }

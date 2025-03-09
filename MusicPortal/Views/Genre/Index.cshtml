@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Portal.BLL.DTO.GenreDTO>
+@if (@Context.Session.GetInt32("Admin") == 1)
+{
+    <div class="list-style-div">
+        <div>
+            <a asp-action="Create">Добавить жанр</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="visibility:hidden;">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        Название
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="visibility:hidden;">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>                       
+                        <td>
+                            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

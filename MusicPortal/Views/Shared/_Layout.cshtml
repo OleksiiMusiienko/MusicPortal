@@ -15,7 +15,7 @@
             
              <nav>
                  <div class="ndb">
-                <a id="link-1" class="navbar-brand btn-new" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                <a id="link-1" class="navbar-brand btn-new" asp-area="" asp-controller="Song" asp-action="Index">Главная</a>
 			      </div>
                  <div class ="ndb">
                 <a id="link-2" class="navbar-brand btn-new" asp-area="" asp-controller="Users" asp-action="Create">Регистрация</a>
@@ -99,18 +99,11 @@
             {  
              <div id="admin-panel">
               <a class="navbar-brand btn-new" asp-controller="Users" asp-action="Index">Пользователи</a>
-              <a class="navbar-brand btn-new" asp-controller="" asp-action="" asp-route-id="">Жанры</a>
-			  <a class="navbar-brand btn-new" asp-controller="" asp-action="" asp-route-id="">Песни</a>
+              <a class="navbar-brand btn-new" asp-controller="Genre" asp-action="Index" >Жанры</a>
+			  <a class="navbar-brand btn-new" asp-controller="Song" asp-action="Index" >Песни</a>
 			 </div>
                 <hr/>
-            }  
-            else if (@Context.Session.GetInt32("Ident") != null)
-            {
-                <div id="admin-panel">
-                <a class="navbar-brand btn-new" asp-controller="" asp-action="" asp-route-id="">Добавить песню</a>
-                </div>
-                <hr />
-            }
+            } 
          <div id="render-div">
             @RenderBody()
           </div>
