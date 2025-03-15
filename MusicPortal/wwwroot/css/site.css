@@ -69,7 +69,7 @@ footer span a {
   }
 
 .index-bg {
-    background-color: #353535;
+    /*background-color: #353535;*/
     display:flex;
     flex-direction:row;
 }
@@ -100,6 +100,7 @@ header nav li a:hover {
     color: yellow;
 }
 #index-col-1 {
+    visibility:hidden;
     width:300px;
     flex-direction:column;
     border: outset;
@@ -122,6 +123,7 @@ header nav li a:hover {
     
 }
 #index-col-3 {
+    visibility:hidden;
     flex: 1;
     border: outset;
     border-width: 3px;
@@ -138,6 +140,17 @@ form {
     min-width: 150px;
 
 }
+.btn-back {
+    background-color: #addb00;
+    font-size: 16pt;
+    margin-top: 7px;
+    min-width: 150px;
+}
+    .btn-back:hover {
+        border: 2px solid;
+        border-color: orangered;
+        color: orangered;
+    }
 .btn:hover{
     border:2px solid;
     border-color: deepskyblue;
@@ -242,11 +255,38 @@ hr {
 .table{
     color: whitesmoke;
     vertical-align:central;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:14pt;
 }
 .list-style-div{
     display:flex;
     flex-direction:column;
 }
-audio{
-    height:25px;
+audio {
+    height: 30px;
 }
+source {
+    background-color: #addb00;
+}
+#inputFilter {
+    border-radius: 7px;
+    color: #176300;
+    background-color: lightgray;
+    font-weight: bold;
+    font-size:16pt;
+}
+#selectFilter {
+    color: #176300;
+    background-color: lightgray;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 16pt;    
+}
+#selectButton {
+    color: #176300;
+    background-color: lightgoldenrodyellow;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 16pt;
+}
+

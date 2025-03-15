@@ -1,0 +1,45 @@
+﻿@model Portal.BLL.DTO.SongDTO
+<div class="myform">
+    <h4>Удалить пeсню?</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Delete">
+                <div class="row">
+                    <table class="table">
+                       
+                    <tbody>
+                        <tr>
+                                <td>
+                                    <label asp-for="Name" class="control-label"></label>
+                                </td>
+                            <td class ="form-group">
+                                @Html.DisplayFor(model => model.Name)
+                            </td>
+                          
+                        </tr>
+                        <tr>
+                                <td>
+                                    <label asp-for="Author" class="control-label"></label>
+                                </td>
+                                <td class="form-group">
+                                    @Html.DisplayFor(model => model.Author)
+                                </td>
+                        </tr>
+                    </tbody>
+                </table> 
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Удалить" class="btn btn-primary" /> |
+                    <a asp-action="Index" class="btn">Назад к списку</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

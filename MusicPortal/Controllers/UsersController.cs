@@ -172,7 +172,7 @@ namespace MusicPortal.Controllers
             {
                 return NotFound();
             }
-
+           
             var user = await _context.GetUserById((int)id);
             if (user == null)
             {
@@ -192,7 +192,7 @@ namespace MusicPortal.Controllers
             {
                 await _context.DeleteUser((int)id);
             }
-
+            TempData["Message"] = "Пользователь удален!";
             return RedirectToAction(nameof(Index));
         }
 

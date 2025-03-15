@@ -14,7 +14,7 @@ namespace Portal.DAL.Repositories
         }
         public async Task<IEnumerable<Song>> GetAllSongs()
         {
-            return await db.Songs.ToListAsync();
+            return await db.Songs.Include(s=>s.Genre).ToListAsync();
         }
         public async Task<IEnumerable<Song>> GetSongsByGenre(Genre genre)
         {
@@ -25,6 +25,11 @@ namespace Portal.DAL.Repositories
         {
             var songs = await db.Songs.Where(s=>s.Author == author).ToListAsync();
             return songs!;
+        }
+        public async Task<Song> GetSongById(int id)
+        {
+            Song? song = await db.Songs.FindAsync(id);
+            return song!;
         }
         public async Task Create(Song song)
         {

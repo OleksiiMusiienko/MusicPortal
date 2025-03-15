@@ -2,9 +2,13 @@
 @if (@Context.Session.GetInt32("Admin") == 1)
 {
     <div class="list-style-div">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">@TempData["Message"]</div>
+        }
         <div>
-            <a asp-action="Create">Создать пользователя</a>
-            <a asp-action="Confirm">Запросы регистрации</a>
+            <a asp-action="Create" class="btn">Создать пользователя</a>
+            <a asp-action="Confirm" class="btn">Запросы регистрации</a>
         </div>
         <table class="table">
             <thead>
@@ -47,8 +51,12 @@
                             @Html.DisplayFor(modelItem => item.DateReg)
                         </td>
                         <td>
-                            @Html.ActionLink("Редактировать", "EditAdmin", new { id = item.Id }) |
-                            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+                            <a asp-action="EditUser" asp-route-id="@item.Id" title="Изменить" style="height:20px; width:20px;">
+                                <img src="~/images/edit-icon.png" alt="download">
+                            </a> <span> | </span>
+                            <a asp-action="Delete" asp-route-id="@item.Id" title="Удалить" style="height:20px; width:20px;">
+                                <img src="~/images/delete-icon.png" alt="download">
+                            </a>
                         </td>
                     </tr>
                 }

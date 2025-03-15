@@ -1,7 +1,7 @@
 ﻿@model Portal.BLL.DTO.SongDTO
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавление песни";
 }
 
 <div class="myform">
@@ -23,7 +23,7 @@
             </div>          
             <div class="form-group">
                 <label asp-for="GenreId" class="control-label"></label>
-                <select asp-for="GenreId" class="form-control" asp-items="ViewBag.Genres as SelectList"></select>
+                <select asp-for="GenreId" class="form-select" asp-items="ViewBag.Genres as SelectList"></select>
                 <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
             <div><hr /></div>                
@@ -37,9 +37,9 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index" class="btn">Назад</a>
+    </div>
 </div>
 
 @section Scripts {

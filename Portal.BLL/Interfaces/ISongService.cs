@@ -14,8 +14,8 @@ namespace Portal.BLL.Interfaces
         Task Delete(int id);
         Task Update(SongDTO song);
         Task<IEnumerable<SongDTO>> GetAllSongs();
-        Task<IEnumerable<SongDTO>> GetSongsByGenre(Genre genre);
+        Task<IEnumerable<SongDTO>> GetSongsByGenre(GenreDTO genre);
         Task<IEnumerable<SongDTO>> GetSongsByAuthor(string author);
-        
+        Task<SongDTO> GetSongById(int id);        
     }
 }

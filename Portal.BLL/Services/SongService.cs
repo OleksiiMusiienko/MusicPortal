@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Portal.BLL.DTO;
+using Portal.BLL.Infrastructure;
 using Portal.BLL.Interfaces;
 using Portal.DAL.Entities;
 using Portal.DAL.Interfaces;
@@ -55,17 +56,27 @@ namespace Portal.BLL.Services
             var mapper = new Mapper(config);
             return mapper.Map<IEnumerable<Song>, IEnumerable<SongDTO>>(await Database.Songs.GetAllSongs());
         }
-        public async Task<IEnumerable<SongDTO>> GetSongsByGenre(Genre genre)
+        public async Task<IEnumerable<SongDTO>> GetSongsByGenre(GenreDTO genre)
         {
+            Genre gen = new Genre();
+            gen.Id = genre.Id;
+            gen.Name = genre.Name;
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Song, SongDTO>().ForMember("Genre", opt => opt.MapFrom(g => g.Genre.Name))); //создаем обьект и говорим что на что мы мапим
             var mapper = new Mapper(config);
-            return mapper.Map<IEnumerable<Song>, IEnumerable<SongDTO>>(await Database.Songs.GetSongsByGenre(genre));
+            return mapper.Map<IEnumerable<Song>, IEnumerable<SongDTO>>(await Database.Songs.GetSongsByGenre(gen));
         }
         public async Task<IEnumerable<SongDTO>> GetSongsByAuthor(string author)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Song, SongDTO>().ForMember("Genre", opt => opt.MapFrom(g => g.Genre.Name))); //создаем обьект и говорим что на что мы мапим
             var mapper = new Mapper(config);
             return mapper.Map<IEnumerable<Song>, IEnumerable<SongDTO>>(await Database.Songs.GetSongsByAuthor(author));
+        }
+        public async Task<SongDTO> GetSongById(int id)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Song, SongDTO>().ForMember("Genre", opt => opt.MapFrom(g => g.Genre!.Name))); //создаем обьект и говорим что на что мы мапим
+            var mapper = new Mapper(config);
+            return mapper.Map<Song, SongDTO>(await Database.Songs.GetSongById(id));           
         }
     }
 }

@@ -1,36 +1,56 @@
-﻿@model IEnumerable<Portal.BLL.DTO.SongDTO>
+﻿@model MusicPortal.Models.IndexViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
+
 <div style="display:flex; flex-direction:column">
+    
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
     @if (@Context.Session.GetInt32("Admin") == 1 || Context.Session.GetString("Name") != null)
     {
         <a asp-action="Create" class="navbar-brand btn-new">Добавить песню</a>
     }
-
-
-
+    <hr>
+    <form method="get">
+        <div style="vertical-align:central;">
+            <label style="color: whitesmoke; font-size:16pt;">Автор: </label>
+            <input id="inputFilter" name="author" value="@Model.FilterViewModel.SelectedAuthor" />
+            <label style="color: whitesmoke; font-size:16pt;">Жанр: </label>
+            <select id="selectFilter"  name="genre" asp-items="@Model.FilterViewModel.Genres"></select>
+            <input id="selectButton" type="submit" value="Поиск" />
+        </div>
+    </form>
+    <hr>
 <table class="table">
-    <thead>
+        <thead >
         <tr>
-           @*  <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                    <a style="color: #c4ff0e;" asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.NameSort)"
+                       asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+                       asp-route-author="@(Model.FilterViewModel.SelectedAuthor)">
+                        Название
+                    </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Author)
+                    <a style="color: #c4ff0e;" asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.AuthorSort)"
+                       asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+                       asp-route-author="@(Model.FilterViewModel.SelectedAuthor)">
+                        Автор
+                    </a>
             </th>
             <th>
                 
             </th>
             <th>
-
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                    <a style="color: #c4ff0e;" asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.GenreSort)"
+                       asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+                       asp-route-author="@(Model.FilterViewModel.SelectedAuthor)">
+                       Жанр
+                    </a>
             </th>
             <th>
 
@@ -38,7 +58,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Songs) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -47,27 +67,33 @@
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
-                    <audio controls controlslist="nodownload">
-                        <source src="@Url.Content(item.Path)" type="audio/mp3">
-                        <source src="@Url.Content(item.Path)" type="audio/mpeg">
-                        <source src="@Url.Content(item.Path)" type="audio/wav">
-                    </audio>
-            </td>
-            <td>
                         @if (Context.Session.GetString("Name") != null)
                         {
-                            <a asp-action="Download" asp-route-id="@item.Id" title="Скачать" style="height:20px; width:30px;">
-                                <img src="~/images/download-icon.png" alt="download">
-                            </a>
+                            <audio class="audio-container" controls>
+                                <source src="@Url.Content(item.Path)" type="audio/mp3">
+                                <source src="@Url.Content(item.Path)" type="audio/mpeg">
+                                <source src="@Url.Content(item.Path)" type="audio/wav">
+                            </audio>
                         }
-             </td>
+                        else
+                        {
+                            <audio controls controlslist="nodownload">
+                                <source src="@Url.Content(item.Path)" type="audio/mp3">
+                                <source src="@Url.Content(item.Path)" type="audio/mpeg">
+                                <source src="@Url.Content(item.Path)" type="audio/wav">
+                            </audio>
+                        }
+                       
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Genre)
             </td>
             <td>
                     @if (@Context.Session.GetInt32("Admin") == 1)
                     {
-                        @Html.ActionLink("Изменить", "Edit", new { id = item.Id }, new { @class = "navbar-brand btn-new" })
+                            <a asp-action="Edit" asp-route-id="@item.Id" title="Изменить" style="height:20px; width:20px;">
+                                <img src="~/images/edit-icon.png" alt="download">
+                            </a> <span> | </span>
                             <a asp-action="Delete" asp-route-id="@item.Id" title="Удалить" style="height:20px; width:20px;">
                                 <img src="~/images/delete-icon.png" alt="download">
                             </a>
@@ -78,4 +104,29 @@
 }
     </tbody>
 </table>
+    <p>
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <a style="color: #c4ff0e; font-size:16pt;" asp-action="Index"
+               asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+               asp-route-author="@(Model.FilterViewModel.SelectedAuthor)"
+               asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+               asp-route-sortorder="@(Model.SortViewModel.Current)"
+               class="glyphicon glyphicon-chevron-left">
+                Назад
+            </a>
+        }
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <a style="color: #c4ff0e; font-size:16pt;" asp-action="Index"
+               asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+               asp-route-author="@(Model.FilterViewModel.SelectedAuthor)"
+               asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+               asp-route-sortorder="@(Model.SortViewModel.Current)"
+               class="glyphicon glyphicon-chevron-left">
+                Вперед
+            </a>
+        }
+    </p>
 </div>
+

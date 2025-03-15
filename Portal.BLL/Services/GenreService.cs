@@ -44,7 +44,6 @@ namespace Portal.BLL.Services
                 Id = gen.Id,
                 Name = gen.Name
             };
-
         }
         public async Task<GenreDTO> GetGenreByName(string name)
         {
