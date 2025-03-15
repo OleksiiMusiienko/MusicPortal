@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using Portal.BLL.DTO;
 using Portal.BLL.Infrastructure;
@@ -39,17 +40,17 @@ namespace Portal.BLL.Services
         } 
         public async Task UpdateUser(UserDTO userDTO, bool confirm = false)
         {
-            var user = new User
-            {
-                Id = userDTO.Id,
-                Name = userDTO.Name,
-                LoginMail = userDTO.LoginMail,
-                Register = userDTO.Register,
-                StatusAdmin = userDTO.StatusAdmin,
-                DateReg = userDTO.DateReg,
-                Password = userDTO.Password,
-                Salt = userDTO.Salt
-            };
+            User user =await Database.Users.GetUserId(userDTO.Id);
+
+            user.Id = userDTO.Id;
+            user.Name = userDTO.Name;
+            user.LoginMail = userDTO.LoginMail;
+            user.Register = userDTO.Register;
+            user.StatusAdmin = userDTO.StatusAdmin;
+            user.DateReg = userDTO.DateReg;
+            user.Password = userDTO.Password;
+            user.Salt = userDTO.Salt;
+            
             if (!confirm)
             {
                   EncodingPassword(userDTO, user);  

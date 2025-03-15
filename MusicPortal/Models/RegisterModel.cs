@@ -18,7 +18,7 @@ namespace MusicPortal.Models
         [Required(ErrorMessage = "Поле должно быть установлено")]
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S{6,16}$", ErrorMessage = "Пароль должен быть не менее 6 знаков, большие, маленькие буквы, символы")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S{6,16}$", ErrorMessage = "Не менее 6 символов, A, a, спецсимволы")]
         public string? Password { get; set; } //при доступе админа в пароль присваивать null for  - public async Task UpdateUser(UserDTO userDTO), там проверка
 
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]

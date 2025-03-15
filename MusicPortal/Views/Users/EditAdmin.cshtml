@@ -1,4 +1,4 @@
-﻿@model Portal.BLL.DTO.UserDTO
+﻿@model MusicPortal.Models.EditUserAdminModel
 <div class="myform">
 <h4>Редактирование пользователя</h4>
 <hr />
@@ -13,12 +13,7 @@
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoginMail" class="control-label"></label>
-                <input asp-for="LoginMail" class="form-control" readonly/>
-                <span asp-validation-for="LoginMail" class="text-danger"></span>
-            </div>
+            </div>          
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="StatusAdmin" /> @Html.DisplayNameFor(model => model.StatusAdmin)
@@ -28,19 +23,10 @@
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Register" /> @Html.DisplayNameFor(model => model.Register)
                 </label>
-            </div>
-                <div class="form-group form-check" style="display:none">
-                    <input asp-for="DateReg"/>
-                </div>
-                <div class="form-group form-check" style="display:none">
-                    <input asp-for="Password" style="visibility:hidden" />
-                </div>
-                <div class="form-group form-check" style="display:none">
-                    <input asp-for="Salt" style="visibility:hidden" />
-                </div>         
-           
+            </div>            
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-primary">Отмена</a>
             </div>
         </form>
     </div>

@@ -97,7 +97,7 @@ namespace MusicPortal.Controllers
                 {
                     return RedirectToAction("Index", "Users");
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Song");
             }
 
             return View(user);
@@ -280,27 +280,35 @@ namespace MusicPortal.Controllers
             {
                 return NotFound();
             }
-            var userBase = await _context.GetUserById((int)id);
+            var userBase = await _context.GetUserById((int)id);            
             if(userBase == null)
             {
                 return NotFound();
             }
-            return View(userBase);
+            EditUserAdminModel model = new EditUserAdminModel();
+            model.Id = userBase.Id;
+            model.Name = userBase.Name;
+            model.Register = userBase.Register;
+            model.StatusAdmin = userBase.StatusAdmin;
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAdmin(int id, [Bind("Id,Name,LoginMail,StatusAdmin,Register, Password,Salt,DateReg")] UserDTO us)
+        public async Task<IActionResult> EditAdmin(int id,EditUserAdminModel  user)
         {
-            if (id != us.Id)
+            if (id != user.Id)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                            
+                UserDTO userDTO = await _context.GetUserById(user.Id);
+                userDTO.StatusAdmin = user.StatusAdmin;
+                userDTO.Register = user.Register;
+                userDTO.Name = user.Name;
                 try
                 {             
-                    await _context.UpdateUser(us);
+                    await _context.UpdateUser(userDTO);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
