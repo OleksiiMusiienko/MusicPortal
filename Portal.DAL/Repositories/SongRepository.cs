@@ -28,7 +28,7 @@ namespace Portal.DAL.Repositories
         }
         public async Task<Song> GetSongById(int id)
         {
-            Song? song = await db.Songs.FindAsync(id);
+            Song? song = await db.Songs.Include(s => s.Genre).FirstOrDefaultAsync(s => s.Id == id);
             return song!;
         }
         public async Task Create(Song song)
