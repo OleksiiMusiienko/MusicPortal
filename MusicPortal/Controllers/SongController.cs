@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using MusicPortal.Filters;
 using MusicPortal.Models;
 using Portal.BLL.DTO;
 using Portal.BLL.Interfaces;
 
 namespace MusicPortal.Controllers
 {
+    [Culture]
     public class SongController : Controller
     {
         private readonly ISongService _context;
@@ -170,6 +172,22 @@ namespace MusicPortal.Controllers
                 return RedirectToAction("Index");
             }
             return View(songDto);
+        }
+        public ActionResult ChangeCulture(string lang)
+        {
+            string? returnUrl = HttpContext.Session.GetString("path") ?? "/Song/Index";
+
+            // Список культур
+            List<string> cultures = new List<string>() { "ru", "uk" };
+            if (!cultures.Contains(lang))
+            {
+                lang = "ru";
+            }
+
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddDays(10); // срок хранения куки - 10 дней
+            Response.Cookies.Append("lang", lang, option); // создание куки
+            return Redirect(returnUrl);
         }
     }
 }

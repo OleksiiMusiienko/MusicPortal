@@ -11,53 +11,67 @@
 </head>
 <body>
     <header class="header-container">
-             <div class="col-1"></div>
+             <div class="col-1">
+
+            @using (Html.BeginForm("ChangeCulture", "Song"))
+            {
+                <select name="lang" id="form-control">
+                    <option value="ru">Русский</option>
+                    <option value="uk">Українська</option>
+                </select>
+                <div>
+                <input id="inputSel" type="submit" name="submit" value="@Resources.Resource.ChooseLang" class="btn">
+                </div>
+            }
+             </div>
             
              <nav>
                  <div class="ndb">
-                <a id="link-1" class="navbar-brand btn-new" asp-area="" asp-controller="Song" asp-action="Index">Главная</a>
+                <a id="link-1" class="navbar-brand btn-new" asp-area="" asp-controller="Song" asp-action="Index">@Resources.Resource.Home</a>
 			      </div>
                  <div class ="ndb">
-                <a id="link-2" class="navbar-brand btn-new" asp-area="" asp-controller="Users" asp-action="Create">Регистрация</a>
+                <a id="link-2" class="navbar-brand btn-new" asp-area="" asp-controller="Users" asp-action="Create">@Resources.Resource.Registration</a>
                   </div>
                   <div class="ndb">
                     @if (@Context.Session.GetString("Name") == null)
                      {
-                    <a id="link-3" class="navbar-brand btn-new" asp-area="" asp-controller="Users" asp-action="Logon">Войти</a>
+                    <a id="link-3" class="navbar-brand btn-new" asp-area="" asp-controller="Users" asp-action="Logon">@Resources.Resource.Entrance</a>
                      }
                     else
                      {
-                    <a id="link-3" class="navbar-brand btn-new" asp-area="" asp-controller="Home" asp-action="Logout">Выйти</a>
+                    <a id="link-3" class="navbar-brand btn-new" asp-area="" asp-controller="Home" asp-action="Logout">@Resources.Resource.Exit</a>
 
                      }
                   </div>
-			</nav>     
+			</nav>    
+          
+      
             <div class="panel-user">
                @if (@Context.Session.GetString("Name") != null)
               {
-                <p class="user-panel" style="text-align:right; font-weight: bold; margin:5px; color:darkred;">Панель пользователя</p>
-                <p class="user-panel-1" style="text-align:center; margin:5px">Привет @Context.Session.GetString("Name")!</p>
+                <p class="user-panel" style="text-align:right; font-weight: bold; margin:5px; color:darkred;">@Resources.Resource.User_panel</p>
+                <p class="user-panel-1" style="text-align:center; margin:5px">@Resources.Resource.Hello @Context.Session.GetString("Name")!</p>
                 <p style="visibility: hidden; "></p>
-                <p class="user-panel" style="display:inline; margin:5px">Логин:</p>
+                <p class="user-panel" style="display:inline; margin:5px">@Resources.Resource.Login:</p>
                 <p class="user-panel-1" style="margin:5px"> (@Context.Session.GetString("Login"))</p>
                 <p style="visibility: hidden;"></p>
-                <p class="user-panel" style="display:inline;">Статус:</p>
+                <p class="user-panel" style="display:inline;">@Resources.Resource.Status:</p>
                 if (@Context.Session.GetInt32("Admin") == 1)
-                {                   
-                    <p class="user-panel-1">администратор</p>                                  
+                {
+                    <p class="user-panel-1">@Resources.Resource.Administrator</p>
                 }
                 else
-                {      
-                    <p class="user-panel-1">пользователь</p>                   
+                {
+                    <p class="user-panel-1">@Resources.Resource.User</p>
                 }
                 <p style="visibility: hidden;"></p>
-                <a class="navbar-brand btn-new" asp-controller="Users" asp-action="EditUser" asp-route-id="@Context.Session.GetInt32("Ident")">Редактировать</a>
+                <a class="navbar-brand btn-new" asp-controller="Users" asp-action="EditUser" asp-route-id="@Context.Session.GetInt32("Ident")">@Resources.Resource.Edit</a>
             }
             else
             {
                 <p class="user-panel" style="text-align:right; font-weight: bold; margin:5px; color:darkred;">Регистрация дает <br /> больше возможностей</p>
             }
-        </div>
+        </div>       
     </header>
    
     <div class="index-bg" style="background-image: url('/images/background.jpg');">
@@ -70,9 +84,9 @@
             @if (@Context.Session.GetInt32("Admin") == 1)
             {  
              <div id="admin-panel">
-              <a class="navbar-brand btn-new" asp-controller="Users" asp-action="Index">Пользователи</a>
-              <a class="navbar-brand btn-new" asp-controller="Genre" asp-action="Index" >Жанры</a>
-			  <a class="navbar-brand btn-new" asp-controller="Song" asp-action="Index" >Песни</a>
+                    <a class="navbar-brand btn-new" asp-controller="Users" asp-action="Index">@Resources.Resource.Users</a>
+                    <a class="navbar-brand btn-new" asp-controller="Genre" asp-action="Index">@Resources.Resource.Genres</a>
+                    <a class="navbar-brand btn-new" asp-controller="Song" asp-action="Index">@Resources.Resource.Songs</a>
 			 </div>
                 <hr/>
             } 

@@ -9,16 +9,16 @@
                         @Html.DisplayNameFor(model => model.Id)
                     </th>
                     <th>
-                        Имя
+                        @Resources.Resource.UserName
                     </th>
                     <th>
-                        Логин
+                        @Resources.Resource.Login
                     </th>
                     <th>
-                        Администратор
+                        @Resources.Resource.Administrator
                     </th>
                     <th>
-                        Дата
+                        @Resources.Resource.Date
                     </th>
                     <th></th>
                 </tr>
@@ -43,15 +43,15 @@
                             @Html.DisplayFor(modelItem => item.DateReg)
                         </td>
                         <td>
-                            @Html.ActionLink("Подтвердить", "RegisterConfirm", item) |
-                            @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                            @Html.ActionLink(@Resources.Resource.Confirm, "RegisterConfirm", item) |
+                            @Html.ActionLink(@Resources.Resource.Delete, "Delete", new { id = item.Id })
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
         <div>
-            <a asp-action="Index" class="btn btn-primary">Назад</a>
+            <a asp-action="Index" class="btn btn-primary">@Resources.Resource.Back</a>
         </div>
     </div>
     

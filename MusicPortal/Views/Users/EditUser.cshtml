@@ -1,6 +1,6 @@
 ﻿@model MusicPortal.Models.RegisterModel
 <div class="myform">
-<h4>Редактирование профиля</h4>
+    <h4>@Resources.Resource.Edit_user</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -41,8 +41,8 @@
                     <input asp-for="DateReg" class="form-control" />
                 </div>
                 <div class="form-group">
-                <input type="submit" value="Изменить" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-primary">Отмена</a>
+                    <input type="submit" value=@Resources.Resource.Save class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-primary">@Resources.Resource.Cancel</a>
             </div>
         </form>
     </div>

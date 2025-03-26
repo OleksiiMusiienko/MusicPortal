@@ -7,8 +7,8 @@
             <div class="alert alert-success">@TempData["Message"]</div>
         }
         <div>
-            <a asp-action="Create" class="btn">Создать пользователя</a>
-            <a asp-action="Confirm" class="btn">Запросы регистрации</a>
+            <a asp-action="Create" class="btn">@Resources.Resource.Create_user</a>
+            <a asp-action="Confirm" class="btn">@Resources.Resource.Registration_requests</a>
         </div>
         <table class="table">
             <thead>
@@ -17,16 +17,16 @@
                         @Html.DisplayNameFor(model => model.Id)
                     </th>
                     <th>
-                        Имя
+                        @Resources.Resource.UserName
                     </th>
                     <th>
-                        Логин
+                        @Resources.Resource.Login
                     </th>
                     <th>
-                        Администратор
+                        @Resources.Resource.Administrator
                     </th> 
                     <th>
-                        Дата
+                        @Resources.Resource.Date
                     </th>
                     <th></th>
                 </tr>
@@ -51,10 +51,10 @@
                             @Html.DisplayFor(modelItem => item.DateReg)
                         </td>
                         <td>
-                            <a asp-action="EditAdmin" asp-route-id="@item.Id" title="Изменить" style="height:20px; width:20px;">
+                            <a asp-action="EditAdmin" asp-route-id="@item.Id" title=@Resources.Resource.Edit style="height:20px; width:20px;">
                                 <img src="~/images/edit-icon.png" alt="download">
                             </a> <span> | </span>
-                            <a asp-action="Delete" asp-route-id="@item.Id" title="Удалить" style="height:20px; width:20px;">
+                            <a asp-action="Delete" asp-route-id="@item.Id" title=@Resources.Resource.Delete style="height:20px; width:20px;">
                                 <img src="~/images/delete-icon.png" alt="download">
                             </a>
                         </td>

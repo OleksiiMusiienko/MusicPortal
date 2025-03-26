@@ -5,7 +5,7 @@
 }
 
 <div class="myform">
-    <h4>Добавление песни</h4>
+    <h4>@Resources.Resource.Add_song</h4>
     <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,14 +31,14 @@
                 <input type="file" name="uploadedFile" /><br>
             </div>
             <div class="form-group">
-                <input type="submit" value="Добавить" class="btn btn-primary" />
+                    <input type="submit" value=@Resources.Resource.Add class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
     <div>
-        <a asp-action="Index" class="btn">Назад</a>
+        <a asp-action="Index" class="btn">@Resources.Resource.Back</a>
     </div>
 </div>
 

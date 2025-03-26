@@ -6,12 +6,15 @@ namespace MusicPortal.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть установлено")]
-        [Display(Name = "Имя")]        
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+                 ErrorMessageResourceName = "NameRequiredView")]
+        [Display(Name = "UserName", ResourceType = typeof(Resources.Resource))]        
         public string? Name { get; set; }
 
-        [Display(Name = "Зарегистриван")]
+        [Display(Name = "Registration", ResourceType = typeof(Resources.Resource))]
         public bool Register {  get; set; }
+
+        [Display(Name = "StatusAdmin", ResourceType = typeof(Resources.Resource))]
         public bool StatusAdmin { get; set; }
 
     }

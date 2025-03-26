@@ -1,6 +1,6 @@
 ﻿@model Portal.BLL.DTO.UserDTO
 <div class="myform">
-    <h4>Удалить пользователя?</h4>
+    <h4>@Resources.Resource.Confirm_delete_song</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
@@ -12,8 +12,8 @@
                     @Html.DisplayFor(model => model.LoginMail)
                 </div>               
                 <div class="form-group">
-                    <input type="submit" value="Удалить" class="btn btn-primary" /> |
-                    <a asp-action="Index">Назад к списку</a>
+                    <input type="submit" value=@Resources.Resource.Delete class="btn btn-primary" /> |
+                    <a asp-action="Index">@Resources.Resource.Back</a>
                 </div>
             </form>
         </div>

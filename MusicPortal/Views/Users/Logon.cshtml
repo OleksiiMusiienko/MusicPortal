@@ -1,6 +1,6 @@
 ﻿@model MusicPortal.Models.LoginModel
 <div class="myform">
-<h4>Авторизация</h4>
+<h4>@Resources.Resource.Authorization</h4>
 <hr/>
 <div class="row" >
 	<div class="form-style-div" >
@@ -17,8 +17,8 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                    <input type="submit" value="Вход" class="btn btn-primary" />
-                    <a class="btn btn-primary" asp-action="Index" asp-controller="Song">Отмена</a>
+                    <input type="submit" value=@Resources.Resource.Entrance class="btn btn-primary" />
+                    <a class="btn btn-primary" asp-action="Index" asp-controller="Song">@Resources.Resource.Cancel</a>
             </div>
         </form>
     </div>

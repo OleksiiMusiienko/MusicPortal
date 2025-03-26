@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MusicPortal.Models;
 using Portal.BLL.DTO;
 using Portal.BLL.Interfaces;
-using Portal.DAL.Entities;
+using MusicPortal.Filters;
 
 namespace MusicPortal.Controllers
 {
+    [Culture]
     public class GenreController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IGenreService _context;
@@ -17,10 +17,12 @@ namespace MusicPortal.Controllers
         }
         public async Task <IActionResult> Index()
         {
+            HttpContext.Session.SetString("path", Request.Path);
             return View(await _context.GetAllGenres());
         }
         public IActionResult Create()
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (HttpContext.Session.GetInt32("Admin") == null)
             {
                 HttpContext.Session.Clear();
@@ -50,6 +52,7 @@ namespace MusicPortal.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();

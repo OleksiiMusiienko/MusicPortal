@@ -1,7 +1,7 @@
 ﻿@model MusicPortal.Models.IndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = @Resources.Resource.Songs;
 }
 
 <div style="display:flex; flex-direction:column">
@@ -12,14 +12,14 @@
     }
     @if (@Context.Session.GetInt32("Admin") == 1 || Context.Session.GetString("Name") != null)
     {
-        <a asp-action="Create" class="navbar-brand btn-new">Добавить песню</a>
+        <a asp-action="Create" class="navbar-brand btn-new">@Resources.Resource.Add_song</a>
     }
     <hr>
     <form method="get">
         <div style="vertical-align:central;">
-            <label style="color: whitesmoke; font-size:16pt;">Автор: </label>
+            <label style="color: whitesmoke; font-size:16pt;">@Resources.Resource.Author</label>
             <input id="inputFilter" name="author" value="@Model.FilterViewModel.SelectedAuthor" />
-            <label style="color: whitesmoke; font-size:16pt;">Жанр: </label>
+            <label style="color: whitesmoke; font-size:16pt;">@Resources.Resource.Genre: </label>
             <select id="selectFilter"  name="genre" asp-items="@Model.FilterViewModel.Genres"></select>
             <input id="selectButton" type="submit" value="Поиск" />
         </div>
@@ -32,14 +32,14 @@
                     <a style="color: #c4ff0e;" asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.NameSort)"
                        asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
                        asp-route-author="@(Model.FilterViewModel.SelectedAuthor)">
-                        Название
+                        @Resources.Resource.Name
                     </a>
             </th>
             <th>
                     <a style="color: #c4ff0e;" asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.AuthorSort)"
                        asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
                        asp-route-author="@(Model.FilterViewModel.SelectedAuthor)">
-                        Автор
+                        @Resources.Resource.Author
                     </a>
             </th>
             <th>
@@ -49,7 +49,7 @@
                     <a style="color: #c4ff0e;" asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.GenreSort)"
                        asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
                        asp-route-author="@(Model.FilterViewModel.SelectedAuthor)">
-                       Жанр
+                        @Resources.Resource.Genre
                     </a>
             </th>
             <th>
@@ -91,10 +91,10 @@
             <td>
                     @if (@Context.Session.GetInt32("Admin") == 1)
                     {
-                            <a asp-action="Edit" asp-route-id="@item.Id" title="Изменить" style="height:20px; width:20px;">
+                            <a asp-action="Edit" asp-route-id="@item.Id" title=@Resources.Resource.Edit style="height:20px; width:20px;">
                                 <img src="~/images/edit-icon.png" alt="download">
                             </a> <span> | </span>
-                            <a asp-action="Delete" asp-route-id="@item.Id" title="Удалить" style="height:20px; width:20px;">
+                            <a asp-action="Delete" asp-route-id="@item.Id" title=@Resources.Resource.Delete style="height:20px; width:20px;">
                                 <img src="~/images/delete-icon.png" alt="download">
                             </a>
                     }
@@ -113,7 +113,7 @@
                asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
                asp-route-sortorder="@(Model.SortViewModel.Current)"
                class="glyphicon glyphicon-chevron-left">
-                Назад
+                @Resources.Resource.Back
             </a>
         }
         @if (Model.PageViewModel.HasNextPage)
@@ -124,7 +124,7 @@
                asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
                asp-route-sortorder="@(Model.SortViewModel.Current)"
                class="glyphicon glyphicon-chevron-left">
-                Вперед
+                @Resources.Resource.Forward
             </a>
         }
     </p>

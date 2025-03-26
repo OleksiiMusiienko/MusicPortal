@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using MusicPortal.Filters;
 using MusicPortal.Models;
 using System.Diagnostics;
 
 namespace MusicPortal.Controllers
 {
+    [Culture]
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ILogger<HomeController> _logger;

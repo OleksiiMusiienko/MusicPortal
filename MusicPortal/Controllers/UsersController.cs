@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MusicPortal.Filters;
 using MusicPortal.Models;
 using Portal.BLL.DTO;
 using Portal.BLL.Interfaces;
@@ -9,6 +10,7 @@ using System.Text;
 
 namespace MusicPortal.Controllers
 {
+    [Culture]
     public class UsersController : Controller
     {
         private readonly IUserService _context;
