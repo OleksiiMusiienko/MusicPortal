@@ -7,8 +7,9 @@ namespace Portal.BLL.DTO
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="Заполните поле")]
-        [Display (Name = "Имя")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+                 ErrorMessageResourceName = "NameRequiredView")]
+        [Display(Name = "UserName", ResourceType = typeof(Resources.Resource))]
         public string? Name { get; set; }
         public string? LoginMail { get; set; }
         public bool StatusAdmin { get; set; } //свойство статус определяет права пользователя (админ или пользователь), доступ админ +

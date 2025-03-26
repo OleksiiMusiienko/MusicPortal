@@ -11,8 +11,9 @@ namespace Portal.BLL.DTO
     {
         public int Id { get; set;}
 
-        [Required(ErrorMessage = "Заполните поле")]
-        [Display(Name = "Название")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+                ErrorMessageResourceName = "NameRequiredView")]
+        [Display(Name = "Name", ResourceType = typeof(Resources.Resource))]
         public string? Name { get; set; }
     }
 }

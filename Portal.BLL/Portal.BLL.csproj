@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Portal.DAL\Portal.DAL.csproj" />
+    <ProjectReference Include="..\Resources\Resources.csproj" />
   </ItemGroup>
 
 </Project>

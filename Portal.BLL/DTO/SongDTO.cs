@@ -12,20 +12,23 @@ namespace Portal.BLL.DTO
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть установлено.")]
-        [Display(Name = "Название")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+                 ErrorMessageResourceName = "NameRequiredView")]
+        [Display(Name = "Name", ResourceType = typeof(Resources.Resource))]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "Поле должно быть установлено.")]
-        [Display(Name = "Автор")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+                 ErrorMessageResourceName = "NameRequiredView")]
+        [Display(Name = "Author", ResourceType = typeof(Resources.Resource))]
         public string? Author { get; set; }
         public string? Path { get; set; }  //путь к папке с песней
 
-        [Required(ErrorMessage = "Поле должно быть установлено.")]
-        [Display(Name = "Жанр")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resource),
+                 ErrorMessageResourceName = "NameRequiredView")]
+        [Display(Name = "Genre", ResourceType = typeof(Resources.Resource))]
         public int? GenreId { get; set; } //для реализации комбобокса
 
-        [Display(Name = "Жанр")]
+        [Display(Name = "Genre", ResourceType = typeof(Resources.Resource))]
         public string? Genre { get; set; } //отображение жанра
     }
 }
