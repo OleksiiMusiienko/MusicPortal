@@ -22,6 +22,7 @@ namespace MusicPortal.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+            HttpContext.Session.SetString("path", Request.Path);
             return View(await _context.GetAllUsers());
         }
 
@@ -45,12 +46,14 @@ namespace MusicPortal.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            
             if (HttpContext.Session.GetInt32("Admin") == null)
             {
                 HttpContext.Session.Clear();
                 ViewBag.UserId = null;
             }
-			return View();
+            HttpContext.Session.SetString("path", Request.Path);
+            return View();
         }
 
         // POST: Users/Create
@@ -108,6 +111,7 @@ namespace MusicPortal.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> EditUser(int? id)
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
@@ -170,6 +174,7 @@ namespace MusicPortal.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
@@ -201,6 +206,7 @@ namespace MusicPortal.Controllers
         //авторизация пользователя
         public IActionResult Logon()
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (HttpContext.Session.GetString("Name")!= null)
             {
                 HttpContext.Session.Clear();
@@ -257,10 +263,12 @@ namespace MusicPortal.Controllers
 
         public async Task<IActionResult> Confirm()
         {
+            HttpContext.Session.SetString("path", Request.Path);
             return View(await _context.GetUsersRegister());
         }
         public async Task<IActionResult> RegisterConfirm(UserDTO user)
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (user == null)
             {
                 return NotFound();
@@ -277,7 +285,8 @@ namespace MusicPortal.Controllers
             return RedirectToAction("Confirm");
         }
         public async Task<IActionResult> EditAdmin(int? id)
-        {           
+        {
+            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();

@@ -24,6 +24,7 @@ namespace MusicPortal.Controllers
         }
         public async Task <IActionResult> Index(string author, int genre = 0, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
+            HttpContext.Session.SetString("path", Request.Path);
             int pageSize = 5;
             IEnumerable<SongDTO> songs = await _context.GetAllSongs();
             //фильтрация
@@ -64,6 +65,7 @@ namespace MusicPortal.Controllers
         }
         public async Task <IActionResult> Create()
         {
+            HttpContext.Session.SetString("path", Request.Path);
             ViewBag.Genres = new SelectList(await _genreService.GetAllGenres(), "Id", "Name");
             return View();
         }
@@ -110,6 +112,7 @@ namespace MusicPortal.Controllers
         }
         public async Task<IActionResult> Delete(int? id)
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
@@ -138,6 +141,7 @@ namespace MusicPortal.Controllers
         }
         public async Task<IActionResult> Edit(int? id)
         {
+            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
